@@ -2,3 +2,5 @@
     replicate- 
         increase the data 
 
+
+2) learn authcontext.js

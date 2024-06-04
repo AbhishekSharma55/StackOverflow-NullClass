@@ -36,8 +36,8 @@ const QuestionDetail = () => {
   }
 
   return (
-    <div className="flex justify-between">
-      <div>
+    <div className="flex justify-around">
+      <div className="w-full">
         <div className="bg-white shadow-md p-4 my-4">
           <h1 className="text-2xl font-bold">{question.question}</h1>
           <div className="flex mt-2">
@@ -52,7 +52,7 @@ const QuestionDetail = () => {
           </div>
           <div className="flex items-center mt-4">
             <div className="text-sm text-gray-600">
-              Asked by {question.userPosted} on {question.askedOn}
+              Asked by @{question.userPosted} on {question.askedOn.slice(0, 10)}
             </div>
           </div>
         </div>
