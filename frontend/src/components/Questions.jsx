@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { CircleArrowUp } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import moment from 'moment';
+
 
 const Questions = () => {
   const [questions, setQuestions] = useState(null);
@@ -22,9 +24,10 @@ const Questions = () => {
     };
     const totalQuestions = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/totalquestions`);
+        const response = await axios.get(
+          `http://localhost:4000/api/totalquestions`
+        );
         setTotalQuestions(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching total questions:", error);
       }
@@ -43,11 +46,18 @@ const Questions = () => {
 
   return (
     <div className="max-w-full">
-      <h1 className="text-2xl font-bold">Questions</h1>
-      <h1 className="text-sm font-light">{totalQuestions} questions found!</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">All Questions</h1>
+        <button className="bg-blue-500 rounded-md transition ease-in-out delay-10 hover:bg-blue-400">
+          <Link to="/askquestion" className="text-xs text-white m-3">
+            Ask Questions
+          </Link>
+        </button>
+      </div>
+      <h1 className="text-sm font-light">{totalQuestions} questions</h1>
       {questions ? (
         questions.map((question) => (
-          <Link key={question._id} to={`/question/${question._id}`}>
+          <Link key={question._id} to={`/question/${question._id}`} >
             <div className="bg-white shadow-md p-4 my-4 max-w-full">
               <div className="flex flex-col justify-between items-start">
                 <div className="w-full">
@@ -90,7 +100,7 @@ const Questions = () => {
                       <span>{question.noOfAnswers} answers</span>
                     </div>
                     <div className="text-sm text-gray-600 break-words">
-                      Asked by {question.userPosted} on {question.askedOn}
+                      Asked by @{question.userPosted} on {moment(question.askedOn).format('DD/MM/YYYY')}
                     </div>
                   </div>
                 </div>
