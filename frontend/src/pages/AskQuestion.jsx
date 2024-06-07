@@ -1,7 +1,8 @@
-// AskQuestion.jsx
+// src/pages/AskQuestion.jsx
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from "../context/AlertContext";
 
 const AskQuestion = () => {
   const [title, setTitle] = useState('');
@@ -9,6 +10,9 @@ const AskQuestion = () => {
   const [questionTags, setTags] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const showAlert = useAlert();
+  const apiUrl = process.env.REACT_APP_API_URL;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,16 +29,18 @@ const AskQuestion = () => {
           'Authorization': `Bearer ${token}`
         }
       };
-      const response = await axios.post('http://localhost:4000/api/postquestion', { title, questionBody, questionTags }, config);
+      const response = await axios.post(`${apiUrl}/api/postquestion`, { title, questionBody, questionTags }, config);
 
       if (response.status === 200) {
-        navigate('/', { state: { verificationMessage: 'Question Posted successful!.' } }); // Redirect to home or questions page
+        navigate('/'); // Redirect to home or questions page
+        showAlert('Question submitted successfully', 'success');
       } else {
         setError('Failed to submit the question. Please try again.');
+        showAlert('Failed to submit the question. Please try again.', 'error');
       }
     } catch (err) {
-      console.error(err);
       setError('An error occurred. Please try again later.');
+      showAlert('An error occurred. Please try again later.', 'error');
     }
   };
 

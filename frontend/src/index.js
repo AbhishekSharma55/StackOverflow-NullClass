@@ -4,29 +4,36 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import QuestionDetail from "./components/QuestionDetail";
 import CommonBar from "./components/CommonBar";
 import AskQuestion from "./pages/AskQuestion";
 import AuthProvider from "./context/AuthContext";
+import { AlertProvider } from "./context/AlertContext";
+import Tags from "./pages/Tags";
+import Users from "./pages/Users";
+import EditUser from "./pages/EditUser";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <AuthProvider>
-      <CommonBar />
-      <div className="pl-80 pt-12">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/askquestion" element={<AskQuestion />} />
-          <Route path="/question/:id" element={<QuestionDetail />} />
-        </Routes>
-      </div>
+      <AlertProvider>
+        <CommonBar />
+        <div className="pt-10 md:pl-80 md:pt-12">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tags" element={<Tags />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/user/:id" element={<EditUser />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/askquestion" element={<AskQuestion />} />
+            <Route path="/question/:id" element={<QuestionDetail />} />
+          </Routes>
+        </div>
+      </AlertProvider>
     </AuthProvider>
   </BrowserRouter>
 );

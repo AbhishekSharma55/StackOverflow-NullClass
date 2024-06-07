@@ -3,7 +3,7 @@ import React from "react";
 
 const SideBarContent = () => {
   return (
-    <div className="border w-80 shadow-md">
+    <div className="hidden lg:block border w-80 shadow-md">
       <div>
         <div className="bg-orange-200 py-2 px-4 text-sm font-bold">
           The Overflow Blog
