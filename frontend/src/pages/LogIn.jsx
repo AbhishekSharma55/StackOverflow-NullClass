@@ -1,31 +1,42 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { useAlert } from "../context/AlertContext";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+
+  const showAlert = useAlert();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', { email, password });
+      const response = await axios.post(
+        `${apiUrl}/api/auth/login`,
+        { email, password }
+      );
 
       if (response.status === 200) {
         login(response.data.token);
-        navigate('/', { state: { verificationMessage: 'Login successful!' } });
+        navigate("/", { replace: true });
+        showAlert("Logged in successful !", "success");
       } else {
-        setError('Login failed. Please try again.');
+        setError("Login failed. Please try again.");
+        showAlert("Login failed. Please try again.", "error");
       }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.msg) {
         setError(err.response.data.msg);
       } else {
-        setError('An error occurred. Please try again later.');
+        setError("An error occurred. Please try again later.");
+        showAlert("Login failed. Please try again.", "error");
       }
     }
   };
@@ -35,7 +46,12 @@ const Login = () => {
       <main className="flex-1 flex items-center justify-center px-4 md:px-6">
         <div className="w-full max-w-md border p-4 rounded shadow">
           <div className="space-y-1">
-            <img src="/minimallogo.png" alt="StackOverflow Logo" width={40} height={40} />
+            <img
+              src="/minimallogo.png"
+              alt="StackOverflow Logo"
+              width={40}
+              height={40}
+            />
             <h2 className="text-2xl">Sign in to your account</h2>
             <p>Enter your email and password below to access your account.</p>
           </div>
@@ -55,7 +71,10 @@ const Login = () => {
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
                 <label htmlFor="password">Password</label>
-                <Link to="/forgot-password" className="text-sm font-medium text-gray-900 hover:underline">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm font-medium text-gray-900 hover:underline"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -69,12 +88,18 @@ const Login = () => {
               />
             </div>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mt-4">
-              <button type="submit" className="w-full sm:w-auto bg-orange-500 text-white p-2 rounded">
+              <button
+                type="submit"
+                className="w-full sm:w-auto bg-orange-500 text-white p-2 rounded"
+              >
                 Sign in
               </button>
               <div className="text-sm text-gray-500">
-                Don't have an account?{' '}
-                <Link to="/signup" className="font-medium text-gray-900 hover:underline">
+                Don't have an account?{" "}
+                <Link
+                  to="/signup"
+                  className="font-medium text-gray-900 hover:underline"
+                >
                   Sign up
                 </Link>
               </div>

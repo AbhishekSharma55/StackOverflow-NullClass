@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User'); // Adjust the path as necessary
+const auth = require('../middleware/auth');
 const router = express.Router();
 require('dotenv').config();
 
@@ -61,17 +62,17 @@ router.post('/login', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-router.get('/current', async (req, res) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
+router.get('/current',auth, async (req, res) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use your secret key
-    const user = await User.findById(decoded.userId).select('-password');
+    const token = req.header('Authorization').split(' ')[1];
+    const decoded = jwt.verify(token, jwtSecret);
+    const user = await User.findById(decoded.user.id);
     if (!user) {
-      return res.status(404).send({ message: 'User not found' });
+      return res.json({ error: 'User not found' });
     }
-    res.send(user);
+    res.json({user : user , message : 'User found'});
   } catch (error) {
-    res.status(401).send({ message: 'Unauthorized' });
+    res.json({ error: 'Unauthorized' });
   }
 });
 

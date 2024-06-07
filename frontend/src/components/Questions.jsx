@@ -3,38 +3,46 @@ import { Link } from "react-router-dom";
 import { CircleArrowUp } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import moment from 'moment';
-
+import moment from "moment";
+import { useAlert } from "../context/AlertContext";
 
 const Questions = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [questions, setQuestions] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalQuestions, setTotalQuestions] = useState(0);
+  const showAlert = useAlert();
 
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/questions`);
+        const response = await axios.get(`${apiUrl}/api/questions`);
         setQuestions(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching question data:", error);
+        showAlert(
+          "An error occurred while fetching Questions. Please try again later.",
+          "error"
+        );
         setLoading(false);
       }
     };
     const totalQuestions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/totalquestions`
+          `${apiUrl}/api/totalquestions`
         );
         setTotalQuestions(response.data);
       } catch (error) {
-        console.error("Error fetching total questions:", error);
+        showAlert(
+          "An error occurred while fetching Questions. Please try again later.",
+          "error"
+        );
       }
     };
     totalQuestions();
     fetchQuestion();
-  }, []);
+  }, [showAlert , apiUrl]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,8 +56,14 @@ const Questions = () => {
     <div className="max-w-full">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold">All Questions</h1>
-        <button className="bg-blue-500 rounded-md transition ease-in-out delay-10 hover:bg-blue-400">
-          <Link to="/askquestion" className="text-xs text-white m-3">
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = "/askquestion";
+          }}
+          className="bg-blue-500 rounded-md transition ease-in-out delay-10 hover:bg-blue-400 px-4"
+        >
+          <Link to="/askquestion" className="text-xs text-white">
             Ask Questions
           </Link>
         </button>
@@ -57,7 +71,7 @@ const Questions = () => {
       <h1 className="text-sm font-light">{totalQuestions} questions</h1>
       {questions ? (
         questions.map((question) => (
-          <Link key={question._id} to={`/question/${question._id}`} >
+          <Link key={question._id} to={`/question/${question._id}`}>
             <div className="bg-white shadow-md p-4 my-4 max-w-full">
               <div className="flex flex-col justify-between items-start">
                 <div className="w-full">
@@ -78,9 +92,9 @@ const Questions = () => {
                     ))}
                   </div>
                   <div className="flex items-center mt-4 flex-wrap">
-                    <div className="flex items-center mr-4">
+                    <div className="flex items-center mr-4 text-xl">
                       <CircleArrowUp size={24} />
-                      <span>{question.upvotes}</span>
+                      <span className="px-2">{question.upvotes.length}</span>
                     </div>
                     <div className="flex items-center mr-4">
                       <svg
@@ -100,7 +114,8 @@ const Questions = () => {
                       <span>{question.noOfAnswers} answers</span>
                     </div>
                     <div className="text-sm text-gray-600 break-words">
-                      Asked by @{question.userPosted} on {moment(question.askedOn).format('DD/MM/YYYY')}
+                      Asked by @{question.userPosted} on{" "}
+                      {moment(question.askedOn).fromNow()}
                     </div>
                   </div>
                 </div>

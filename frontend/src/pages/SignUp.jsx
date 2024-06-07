@@ -1,42 +1,50 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAlert } from "../context/AlertContext";
 
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const showAlert = useAlert();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/signup', {
-        username: name,
-        email : email,
-        password : password,
-      });
+      const response = await axios.post(
+        `${apiUrl}/api/auth/signup`,
+        {
+          username: name,
+          email,
+          password,
+        }
+      );
 
-      if (response.status === 200) {  // Assuming 201 Created is the success status code
-        // Save the token in local storage or cookies if necessary
-        localStorage.setItem('token', response.data.token);
-        // Redirect to the homepage or any other page
-        navigate('/', { state: { verificationMessage: 'Signup successful! You can now login.' } });
+      if (response.status === 200) {
+        // Assuming 200 OK is the success status code
+        localStorage.setItem("token", response.data.token);
+        navigate("/", { replace: true });
+        showAlert("Signed up successful !", "success");
       } else {
-        setError('Signup failed. Please try again.');
+        setError("Signup failed. Please try again.");
+        showAlert("Signed up failed. Please try again.", "error");
       }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.msg) {
         setError(err.response.data.msg);
       } else {
-        setError('An error occurred. Please try again later.');
+        setError("An error occurred. Please try again later.");
+        showAlert("Signed up failed. Please try again.", "error");
       }
     }
   };
@@ -46,7 +54,12 @@ const Signup = () => {
       <main className="flex-1 flex items-center justify-center px-4 md:px-6">
         <div className="w-full max-w-md border p-4 rounded shadow">
           <div className="space-y-1">
-            <img src="/minimallogo.png" alt="StackOverflow Logo" width={40} height={40} />
+            <img
+              src="/minimallogo.png"
+              alt="StackOverflow Logo"
+              width={40}
+              height={40}
+            />
             <h2 className="text-2xl">Create an account</h2>
             <p>Enter your details below to sign up for a new account.</p>
           </div>
@@ -96,12 +109,18 @@ const Signup = () => {
               />
             </div>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mt-4">
-              <button type="submit" className="w-full sm:w-auto bg-orange-500 text-white p-2 rounded">
+              <button
+                type="submit"
+                className="w-full sm:w-auto bg-orange-500 text-white p-2 rounded"
+              >
                 Sign up
               </button>
               <div className="text-sm text-gray-500">
-                Already have an account?{' '}
-                <Link to="/login" className="font-medium text-gray-900 hover:underline">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="font-medium text-gray-900 hover:underline"
+                >
                   Sign in
                 </Link>
               </div>
