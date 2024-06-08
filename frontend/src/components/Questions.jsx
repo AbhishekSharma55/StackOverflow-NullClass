@@ -42,7 +42,7 @@ const Questions = () => {
     };
     totalQuestions();
     fetchQuestion();
-  }, [showAlert , apiUrl]);
+  }, [apiUrl]);
 
   if (loading) {
     return <div>Loading...</div>;
