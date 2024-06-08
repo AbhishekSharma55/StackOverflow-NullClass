@@ -18,7 +18,8 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: clientUrl,
+  origin: ["https://stack-overflow-null-class.vercel.app/"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 
