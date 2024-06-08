@@ -19,7 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin: ["https://stack-overflow-null-class.vercel.app/"],
+<<<<<<< Updated upstream
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+=======
+>>>>>>> Stashed changes
   credentials: true,
 }));
 
