@@ -14,6 +14,8 @@ import { AlertProvider } from "./context/AlertContext";
 import Tags from "./pages/Tags";
 import Users from "./pages/Users";
 import EditUser from "./pages/EditUser";
+import VerifyOtp from "./pages/ConfirmOTP";
+import ResetPassword from "./pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -29,6 +31,8 @@ root.render(
             <Route path="/user/:id" element={<EditUser />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ResetPassword />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/askquestion" element={<AskQuestion />} />
             <Route path="/question/:id" element={<QuestionDetail />} />
           </Routes>

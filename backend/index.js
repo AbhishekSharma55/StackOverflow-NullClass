@@ -9,7 +9,6 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
 
 // Connect to MongoDB
 connectDB();
@@ -27,7 +26,7 @@ app.use(
 
 // Routes
 app.get("/", (req, res) => {
-  res.json("Hello World!");
+  res.json("Hello World from Stack Overflow Clone backend ! Your in.");
 });
 app.use("/api/auth", require("./routes/auth.js"));
 app.use("/api", require("./routes/main.js"));

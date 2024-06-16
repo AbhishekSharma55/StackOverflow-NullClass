@@ -42,7 +42,8 @@ const Questions = () => {
     };
     totalQuestions();
     fetchQuestion();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ apiUrl ]);
 
   if (loading) {
     return <div>Loading...</div>;

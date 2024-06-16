@@ -1,7 +1,7 @@
 /* alert.css */
 .alert {
     position: fixed;
-    top: -100px; /* Start from top outside of the screen */
+    top: -10px; /* Start from top outside of the screen */
     left: 50%;
     transform: translateX(-50%);
     padding: 1rem;
@@ -30,7 +30,7 @@
 }
 
 .alert-leave {
-    top: -100px; /* Slide back up outside of the screen */
+    top: -50px; /* Slide back up outside of the screen */
     opacity: 0;
     visibility: visible;
 }

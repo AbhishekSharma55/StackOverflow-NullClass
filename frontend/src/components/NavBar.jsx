@@ -33,16 +33,21 @@ const NavBar = () => {
 
   return (
     <nav className="fixed bg-white w-full z-20">
-      <div className="flex align-middle items-center p-2 md:px-40">
+      <div className="flex align-middle items-center p-2 md:px-10">
         <div className="flex items-center justify-between w-full">
-          <button className="w-40" onClick={handleLogoClick}>
+          <button className="w-auto pr-5" onClick={handleLogoClick}>
             <img
               src="/logo.png"
               alt="Stack Overflow Logo"
-              className="h-7 min-w-[120px] md:min-w-[160px]"
+              className="hidden lg:block h-7 min-w-[120px] md:min-w-[160px]"
+            />
+            <img
+              src="/minimallogo.png"
+              alt="Stack Overflow Logo"
+              className="block lg:hidden h-10 w-10 min-h-10 min-w-10"
             />
           </button>
-          <div className="hidden md:flex gap-4 px-4 text-sm font-thin">
+          <div className="hidden lg:flex gap-4 px-4 text-sm font-thin">
             <Link to="#">Products</Link>
             <Link to="#">Overflow API</Link>
           </div>
