@@ -22,7 +22,17 @@ const sendEmail = async (to, subject, text) => {
     html : "<b>"+text+"</b>"
   };
   try {
-    await transporter.sendMail(mailOptions);
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(info);
+        }
+      });
+    });
+  
   } catch (error) {
     console.error('Error sending email:', error);
   }
