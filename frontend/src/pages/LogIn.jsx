@@ -27,7 +27,7 @@ const Login = () => {
         setShowOtpInput(true);
         showAlert("OTP sent to your email.", "success");
       } else {
-        showAlert("Login failed. Please try again.", response.data.err);
+        showAlert(response.data.err,"error");
       }
     } catch (err) {
       showAlert("Login failed. Please try again.", "error");

@@ -32,7 +32,7 @@ const ResetPassword = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/api/auth/verify-otp`, {
+      const response = await axios.post(`${apiUrl}/api/auth/verify-otp-forgot-password`, {
         token,
         otp,
       });
@@ -41,7 +41,7 @@ const ResetPassword = () => {
         setShowResetPasswordForm(true);
         showAlert("You can Reset you Password !", "success");
       } else {
-        showAlert("Invalid OTP. Please try again.", "error");
+        showAlert(response.data.err , "error");
       }
     } catch (err) {
       showAlert("Verification failed. Please try again.", "error");

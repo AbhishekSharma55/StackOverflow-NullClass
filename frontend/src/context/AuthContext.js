@@ -5,17 +5,20 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [tempToken, setTempToken] = useState(null);
+  const [currentToken , setCurrentToken] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+      setCurrentToken(token);
       setIsLoggedIn(true);
     }
   }, []);
-
+  
   const login = (token) => {
     localStorage.setItem('token', token);
     setTempToken(token);
+    setCurrentToken(token);
   };
 
   const verifyOtp = (otpToken) => {
@@ -36,7 +39,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, verifyOtp, logout, tempToken ,completeLogin}}>
+    <AuthContext.Provider value={{ isLoggedIn, login, verifyOtp, logout, tempToken ,completeLogin , currentToken}}>
       {children}
     </AuthContext.Provider>
   );
