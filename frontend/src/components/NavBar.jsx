@@ -1,23 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Inbox, Search, Trophy, User, CircleHelp, Rows3 } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
-import { getCurrentUser } from "../utils/CurrentUser";
 
 const NavBar = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
-  const [id, setId] = useState("");
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      const user = await getCurrentUser();
-      if (user) {
-        setId(user._id);
-      }
-    };
-    fetchCurrentUser();
-  }, []);
 
   const handleLogoClick = () => {
     window.location.href = "/";
@@ -25,10 +13,6 @@ const NavBar = () => {
 
   const handleUserClick = () => {
     setShowLogoutButton((prevState) => !prevState);
-  };
-
-  const myProfile = () => {
-    window.location.href = `/user/${id}`;
   };
 
   return (
@@ -71,12 +55,12 @@ const NavBar = () => {
                 </button>
                 {showLogoutButton && (
                   <div className="absolute right-0 mt-2 bg-white border border-black p-2 text-lg rounded">
-                    <button
+                    <Link
                       className="border border-black m-1 px-2 rounded"
-                      onClick={myProfile}
+                      to={"/MyProfile"}
                     >
                       Profile
-                    </button>
+                    </Link>
                     <button
                       className="border border-black m-1 px-2 rounded"
                       onClick={logout}

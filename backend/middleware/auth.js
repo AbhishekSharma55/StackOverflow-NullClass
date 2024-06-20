@@ -6,12 +6,12 @@ const jwtSecret = process.env.JWT_SECRET;
 module.exports = function(req, res, next) {
   const token = req.header('Authorization');
   if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+    return res.json({ err: 'No token, authorization denied' });
   }
 
   // Check if the token starts with 'Bearer ' before splitting
   if (!token.startsWith('Bearer ')) {
-    return res.status(401).json({ msg: 'Invalid token format' });
+    return res.json({ err: 'Invalid token format' });
   }
 
   try {
@@ -23,6 +23,6 @@ module.exports = function(req, res, next) {
     next();
   } catch (err) {
     console.log(err);
-    res.status(401).json({ msg: 'Token is not valid' });
+    res.json({ err: 'Token is not valid' });
   }
 };

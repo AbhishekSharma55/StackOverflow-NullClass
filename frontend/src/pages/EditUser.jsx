@@ -1,37 +1,84 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertContext";
+import LanguageSelector from "../utils/LanguageSelector";
 
 const EditUser = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [userName, setUserName] = useState("");
+  const [userLog, setUserLog] = useState([]);
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
   const showAlert = useAlert();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/api/user/${id}`
-        );
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        };
+        const response = await axios.get(`${apiUrl}/api/auth/MyProfile`, config);
+        if (response.data.err) {
+          showAlert(response.data.err, "error");
+          return;
+        }
+
         setUserName(response.data.username);
         setEmail(response.data.email);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchUser();
-  }, [id , apiUrl]);
+    
+  }, [ apiUrl , navigate , showAlert]);
+
+  useEffect(() => {
+    const fetchUserLog = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        showAlert("You need to login to view your account", "error");
+        return;
+      }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        const response = await axios.get(`${apiUrl}/api/user/loginactivity`, config);
+        if (response.data.err) {
+          showAlert(response.data.err, "error");
+          console.log(response.data.err);
+          return;
+        }
+        setUserLog(response.data.logs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserLog();
+  }, [ apiUrl, navigate, showAlert]);
 
   const submitChanges = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
-      showAlert("You need to login to update your account", "error")
+      showAlert("You need to login to update your account", "error");
       return;
     }
     const config = {
@@ -58,11 +105,11 @@ const EditUser = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col p-10 gap-20">
+      <h2 className="text-4xl text-center">Update your Account</h2>
       <main className="flex-1 flex items-center justify-center px-4 md:px-6">
         <div className="w-full max-w-md border p-4 rounded shadow">
           <div className="space-y-1">
-            <h2 className="text-2xl">Update your Account</h2>
             <p>
               Overwrite the updated details and hit update to update your
               personal details.
@@ -104,6 +151,34 @@ const EditUser = () => {
           </form>
         </div>
       </main>
+
+      <div>
+      <LanguageSelector />
+
+      </div>
+      <div className="text-center border border-gray-400 rounded-md px-4">
+        <h1 className="text-4xl my-10">Recent Logins</h1>
+        <table className="table-auto w-full my-10">
+          <thead>
+            <tr className="text-lg">
+              <th>IP</th>
+              <th>Browser</th>
+              <th>OS</th>
+              <th>Device</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userLog.map((log, index) => (
+              <tr key={index} className="border border-gray-400 rounded-sm">
+                <td>{log.ip}</td>
+                <td>{log.browser}</td>
+                <td>{log.os}</td>
+                <td>{log.device}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

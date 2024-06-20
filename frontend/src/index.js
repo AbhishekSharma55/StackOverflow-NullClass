@@ -28,7 +28,7 @@ root.render(
             <Route path="/" element={<Home />} />
             <Route path="/tags" element={<Tags />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/user/:id" element={<EditUser />} />
+            <Route path="/MyProfile" element={<EditUser />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ResetPassword />} />

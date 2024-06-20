@@ -72,8 +72,8 @@ const Questions = () => {
       <h1 className="text-sm font-light">{totalQuestions} questions</h1>
       {questions ? (
         questions.map((question) => (
-          <Link key={question._id} to={`/question/${question._id}`}>
-            <div className="bg-white shadow-md p-4 my-4 max-w-full">
+          <Link key={question._id} to={`/question/${question._id}`} >
+            <div className="bg-white shadow p-4 my-4 max-w-full hover:shadow-xl" >
               <div className="flex flex-col justify-between items-start">
                 <div className="w-full">
                   <h2 className="text-xl font-bold break-words">

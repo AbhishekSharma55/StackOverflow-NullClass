@@ -1,6 +1,7 @@
 // routes/questions.js
 const express = require("express");
 const Question = require("../models/Question.js");
+const UserLog = require("../models/UserLog.js");
 const Answer = require("../models/Answer.js");
 const User = require("../models/User.js");
 const auth = require("../middleware/auth.js"); // Assuming you have an auth middleware
@@ -226,22 +227,10 @@ router.get("/users", async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
-    res.json({ err: "Error Fetching Message" });
+    res.json({ err: "Error Fetching User" });
   }
 });
 
-router.get("/user/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (user) {
-      res.json({ email: user.email, username: user.username });
-    } else {
-      res.json({ err: "User not found" });
-    }
-  } catch (err) {
-    res.json({ err: "Error Fetching Message" });
-  }
-});
 
 router.put("/user/update", auth, async (req, res) => {
   try {
@@ -262,7 +251,20 @@ router.put("/user/update", auth, async (req, res) => {
       res.json({ err: "User not found" });
     }
   } catch (err) {
-    res.json({ err: "Error Fetching Message" });
+    res.json({ err: "Failed to update" });
+  }
+});
+
+router.get("/user/loginactivity", auth, async (req, res) => {
+  try {
+    const logs = await UserLog.find({ user: req.user.id });
+    if (!logs) {
+      return res.json({ err: "No logs found" });
+    }
+    res.json({ logs: logs });
+  } catch (err) {
+    console.error({ err });
+    res.json({ err: "Error Fetching Log Activity" });
   }
 });
 
