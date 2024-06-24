@@ -6,9 +6,11 @@ import SideBarContent from "./SideBarContent";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertContext";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 const QuestionDetail = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
+  const {t} = useTranslation();
   const { id } = useParams();
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -210,11 +212,11 @@ const QuestionDetail = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t("Loading")}</div>;
   }
 
   if (!question) {
-    return <div>Question not found.</div>;
+    return <div>{t("QuestionsNotFound")}</div>;
   }
 
   return (
@@ -234,7 +236,7 @@ const QuestionDetail = () => {
           </div>
           <div className="flex items-center mt-4 justify-between">
             <div className="text-sm text-gray-600">
-              Asked by @{question.userPosted} on{" "}
+              {t("AskQuestions")} @{question.userPosted} on{" "}
               {moment(question.askedOn).fromNow()}
             </div>
             <div className="text-sm">
@@ -242,7 +244,7 @@ const QuestionDetail = () => {
                 className="border border-black rounded p-1"
                 onClick={deleteQuestion}
               >
-                Delete Question.
+                {t("DeleteQuestion")}
               </button>
             </div>
           </div>
@@ -270,17 +272,17 @@ const QuestionDetail = () => {
           <p className="text-gray-600 p-4 text-xl">{question.questionBody}</p>
         </div>
         <div className="bg-white shadow-md p-4 mb-4">
-          <h1 className="text-2xl font-bold">Answers {question.noOfAnswers}</h1>
+          <h1 className="text-2xl font-bold">{t("answers")} {question.noOfAnswers}</h1>
         </div>
         <div>
           {answers.map((answer, index) => (
             <div className="bg-white shadow-md p-4 mb-4" key={answer._id}>
               <div className="flex flex-col">
-                <div className="text-xl font-bold">Answer {index + 1}</div>
+                <div className="text-xl font-bold">{t("answers")} {index + 1}</div>
               </div>
               <div className="flex justify-between">
                 <div className="text-sm text-gray-600">
-                  Answered by @{answer.userPosted} on{" "}
+                  {t("AnsweredBy")} @{answer.userPosted} on{" "}
                   {moment(answer.answeredOn).fromNow()}
                 </div>
                 <div>
@@ -290,7 +292,7 @@ const QuestionDetail = () => {
                     }}
                     className="border border-black rounded p-1"
                   >
-                    Delete Answer.
+                    {t("DeleteAnswer")}
                   </button>
                 </div>
               </div>
@@ -306,7 +308,7 @@ const QuestionDetail = () => {
                 htmlFor="answer"
                 className="block text-sm font-medium text-gray-700"
               >
-                Your Answer
+                {t("YourAnswer")}
               </label>
               <textarea
                 id="answer"
@@ -324,7 +326,7 @@ const QuestionDetail = () => {
                 value="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               >
-                Submit Answer
+                {t("SubmitAnswer")}
               </button>
             </div>
           </form>

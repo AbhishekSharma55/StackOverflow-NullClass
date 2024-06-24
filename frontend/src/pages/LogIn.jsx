@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useAlert } from "../context/AlertContext";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const Login = () => {
   const { login , completeLogin} = useContext(AuthContext);
   const apiUrl = process.env.REACT_APP_API_URL;
   const showAlert = useAlert();
+  const { t } = useTranslation();
 
   const handleLogin = async (e) => {
     e.preventDefault(); 
@@ -42,13 +44,13 @@ const Login = () => {
         otp,
       });
 
-      if (!response.err) {
+      if (!response.data.err) {
         login(response.data.authToken);
         completeLogin();
         navigate("/", { replace: true });
         showAlert("Logged in successfully!", "success");
       } else {
-        showAlert("Invalid OTP. Please try again.", "error");
+        showAlert("Invalid OTP. Please try again.","error");
       }
     } catch (err) {
       showAlert("Verification failed. Please try again.", "error");
@@ -59,11 +61,11 @@ const Login = () => {
     <div className="flex flex-col min-h-[100dvh]">
       <main className="flex-1 flex items-center justify-center px-4 md:px-6">
         <div className="w-full max-w-md border p-4 rounded shadow">
-          <h2 className="text-2xl">Sign in to your account</h2>
+          <h2 className="text-2xl">{t("SignInToYourAccount")}</h2>
           {showOtpInput ? (
             <form className="space-y-4 mt-4" onSubmit={handleVerifyOtp}>
               <div className="grid gap-2">
-                <label htmlFor="otp">OTP</label>
+                <label htmlFor="otp">{t("OTP")}</label>
                 <input
                   id="otp"
                   type="text"
@@ -77,13 +79,13 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                Verify OTP
+                {t("VerifyOTP")}
               </button>
             </form>
           ) : (
             <form className="space-y-4 mt-4" onSubmit={handleLogin}>
               <div className="grid gap-2">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">{t("Email")}</label>
                 <input
                   id="email"
                   type="email"
@@ -94,7 +96,7 @@ const Login = () => {
                 />
               </div>
               <div className="grid gap-2">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t("Password")}</label>
                 <input
                   id="password"
                   type="password"
@@ -108,21 +110,23 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                Sign in
+                {t(
+                  "SignIn"
+                )}
               </button>
             </form>
           )}
           <div>
             <p className="mt-4">
-              Forgot your password?{" "}
+              {t("ForgotYourPassword")}{" "}
               <Link to="/forgot-password" className="text-orange-500">
-                Reset here
+                {t("ResetPassword")}
               </Link>
             </p>
             <p className="mt-4">
-              Don't have an account?{" "}
+              {t("DontHaveAnAccount")}{" "}
               <Link to="/signup" className="text-orange-500">
-                Register here
+                {t("RegisterHere")}
               </Link>
             </p>
           </div>

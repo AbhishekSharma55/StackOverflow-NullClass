@@ -1,6 +1,7 @@
 import { useAlert } from "../context/AlertContext";
 import axios from "axios";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
@@ -14,6 +15,7 @@ const ResetPassword = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const showAlert = useAlert();
   const navigate = useNavigate();
+  const {t} = useTranslation();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -70,7 +72,7 @@ const ResetPassword = () => {
   return (
     <div className="p-20">
       <center>
-        <h1 className="text-2xl mb-5">Reset Password</h1>
+        <h1 className="text-2xl mb-5">{t("ResetPassword")}</h1>
         {!showResetPasswordForm ? (
           !showOtpInput ? (
             <form onSubmit={handleResetPassword} className="grid gap-10">
@@ -89,13 +91,13 @@ const ResetPassword = () => {
                 type="submit"
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                Reset Password
+                {t("ResetPassword")}
               </button>
             </form>
           ) : (
             <form className="space-y-4 mt-4" onSubmit={handleVerifyOtp}>
               <div className="grid gap-2">
-                <label htmlFor="otp">OTP</label>
+                <label htmlFor="otp">{t("OTP")}</label>
                 <input
                   id="otp"
                   type="text"
@@ -109,14 +111,14 @@ const ResetPassword = () => {
                 type="submit"
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                Verify OTP
+                {t("VerifyOTP")}
               </button>
             </form>
           )
         ) : (
           <form className="space-y-4 mt-4" onSubmit={handleUpdatePassword}>
             <div className="grid gap-2">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">{t("Password")}</label>
               <input
                 id="password"
                 type="password"
@@ -128,7 +130,7 @@ const ResetPassword = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirmPassword">{t("ConfirmPassword")}</label>
               <input
                 id="confirmPassword"
                 type="password"
@@ -143,7 +145,7 @@ const ResetPassword = () => {
               type="submit"
               className="w-full bg-orange-500 text-white p-2 rounded"
             >
-              Reset Password
+              {t("ResetPassword")}
             </button>
           </form>
         )}

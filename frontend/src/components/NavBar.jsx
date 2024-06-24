@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Inbox, Search, Trophy, User, CircleHelp, Rows3 } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
+  const navigate= useNavigate();
+  const {t} = useTranslation();
 
   const handleLogoClick = () => {
-    window.location.href = "/";
+    navigate("/");
   };
 
   const handleUserClick = () => {
@@ -16,7 +19,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="fixed bg-white w-full z-20">
+    <nav id="navbar" className="fixed bg-white w-full z-20">
       <div className="flex align-middle items-center p-2 md:px-10">
         <div className="flex items-center justify-between w-full">
           <button className="w-auto pr-5" onClick={handleLogoClick}>
@@ -32,8 +35,8 @@ const NavBar = () => {
             />
           </button>
           <div className="hidden lg:flex gap-4 px-4 text-sm font-thin">
-            <Link to="#">Products</Link>
-            <Link to="#">Overflow API</Link>
+            <Link to="#">{t("Products")}</Link>
+            <Link to="#">{t("OverflowAPI")}</Link>
           </div>
           <div className="flex-grow">
             <form action="">
@@ -59,20 +62,20 @@ const NavBar = () => {
                       className="border border-black m-1 px-2 rounded"
                       to={"/MyProfile"}
                     >
-                      Profile
+                      {t("Profile")}
                     </Link>
                     <button
                       className="border border-black m-1 px-2 rounded"
                       onClick={logout}
                     >
-                      Logout
+                      {t("Logout")}
                     </button>
                   </div>
                 )}
               </div>
             ) : (
               <Link to="/login" className="mx-4">
-                Login
+                {t("Login")}
               </Link>
             )}
             <div className="hidden md:flex mx-5 gap-4">

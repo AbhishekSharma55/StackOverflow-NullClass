@@ -23,6 +23,6 @@ module.exports = function(req, res, next) {
     next();
   } catch (err) {
     console.log(err);
-    res.json({ err: 'Token is not valid' });
+    res.json({ err: 'Session Expired , Please Login Again.' });
   }
 };
