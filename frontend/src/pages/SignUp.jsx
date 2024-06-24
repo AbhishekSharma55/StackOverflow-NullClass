@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "../context/AlertContext";
+import { useTranslation } from "react-i18next";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
   const showAlert = useAlert();
+  const {t} = useTranslation();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -60,13 +62,13 @@ const Signup = () => {
               width={40}
               height={40}
             />
-            <h2 className="text-2xl">Create an account</h2>
-            <p>Enter your details below to sign up for a new account.</p>
+            <h2 className="text-2xl">{t("CreateAccount")}</h2>
+            <p>{t("EnterDetailsToSignUp")}</p>
           </div>
           {error && <p className="text-red-500">{error}</p>}
           <form className="space-y-4 mt-4" onSubmit={handleSignup}>
             <div className="grid gap-2">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">{t("Name")}</label>
               <input
                 id="name"
                 placeholder="Enter your full name"
@@ -76,7 +78,7 @@ const Signup = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">{t("Email")}</label>
               <input
                 id="email"
                 type="email"
@@ -87,7 +89,7 @@ const Signup = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">{t("Password")}</label>
               <input
                 id="password"
                 type="password"
@@ -98,7 +100,7 @@ const Signup = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="confirm-password">Confirm Password</label>
+              <label htmlFor="confirm-password">{t("ConfirmPassword")}</label>
               <input
                 id="confirm-password"
                 type="password"
@@ -113,15 +115,15 @@ const Signup = () => {
                 type="submit"
                 className="w-full sm:w-auto bg-orange-500 text-white p-2 rounded"
               >
-                Sign up
+                SignUp
               </button>
               <div className="text-sm text-gray-500">
-                Already have an account?{" "}
+                {t("AlreadyHaveAnAccount")}{" "}
                 <Link
                   to="/login"
                   className="font-medium text-gray-900 hover:underline"
                 >
-                  Sign in
+                  {t("SignIn")}
                 </Link>
               </div>
             </div>

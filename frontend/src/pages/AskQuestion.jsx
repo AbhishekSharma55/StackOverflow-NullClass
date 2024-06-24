@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from "../context/AlertContext";
+import { useTranslation } from "react-i18next";
 
 const AskQuestion = () => {
   const [title, setTitle] = useState('');
   const [questionBody, setQuestionBody] = useState('');
   const [questionTags, setTags] = useState('');
   const [error, setError] = useState('');
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const showAlert = useAlert();
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -48,19 +50,19 @@ const AskQuestion = () => {
     <div className="w-full max-w-5xl mx-auto py-12 md:py-20">
       <div className="px-4 md:px-0 space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-bold">Ask a Question</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">{t("AskQuestions")}</h1>
           <p className="text-gray-500 dark:text-gray-400 max-w-[700px] mx-auto mt-2">
-            Get answers to your questions from our community of experts.
+            {t("GetAnswersFromCommunity")}
           </p>
         </div>
         <div className="border p-4 rounded shadow">
           <div className="mb-4">
-            <h2 className="text-2xl font-bold">Ask your question</h2>
+            <h2 className="text-2xl font-bold">{t("AskQuestions")}</h2>
           </div>
           {error && <p className="text-red-500">{error}</p>}
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-2">
-              <label htmlFor="title">Question Title</label>
+              <label htmlFor="title">{t("QuestionTitle")}</label>
               <input
                 required
                 id="title"
@@ -71,7 +73,7 @@ const AskQuestion = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="body">Question Body</label>
+              <label htmlFor="body">{t("QuestionBody")}</label>
               <textarea
                 required
                 id="body"
@@ -83,7 +85,7 @@ const AskQuestion = () => {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="tags">Tags</label>
+              <label htmlFor="tags">{t("Tags")}</label>
               <input
                 required
                 id="tags"
@@ -97,7 +99,7 @@ const AskQuestion = () => {
               type="submit"
               className="bg-blue-500 text-white p-2 rounded justify-self-end"
             >
-              Ask Question
+              {t("AksQuestions")}
             </button>
           </form>
         </div>

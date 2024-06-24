@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 const Tags = () => {
 
@@ -112,12 +113,12 @@ const Tags = () => {
             "description": "Scikit-learn is a free software machine learning library for the Python programming language."
         }
     ]
-    
+        const { t } = useTranslation();
 
   return (
     <div className='p-5'>
-        <h1 className='text-4xl'>Tags</h1>
-        <p className='text-sm m-2'>A tag is a word or phrase that describes the topic of the question. Tags are a means of connecting experts with questions they will be able to answer by sorting questions into specific, well-defined categories.</p>
+        <h1 className='text-4xl'>{t("Tags")}</h1>
+        <p className='text-sm m-2'>{t("TagDescription")}</p>
         <div className='flex flex-wrap gap-4 m-10'>
             {Tags.map((tag)=>{
                 return(

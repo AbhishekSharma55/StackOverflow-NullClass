@@ -2,11 +2,14 @@
 const express = require("express");
 const Question = require("../models/Question.js");
 const UserLog = require("../models/UserLog.js");
+const useragent = require("user-agent-parser");
 const Answer = require("../models/Answer.js");
 const User = require("../models/User.js");
 const auth = require("../middleware/auth.js"); // Assuming you have an auth middleware
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const { detect } = require("detect-browser");
+const browser = detect();
 
 // Route to submit a question
 router.post(
@@ -231,10 +234,8 @@ router.get("/users", async (req, res) => {
   }
 });
 
-
 router.put("/user/update", auth, async (req, res) => {
   try {
-    console.log("req.body", req.body);
     const errors = validationResult(req);
     console.log("errors", errors);
     if (!errors.isEmpty()) {
@@ -266,6 +267,26 @@ router.get("/user/loginactivity", auth, async (req, res) => {
     console.error({ err });
     res.json({ err: "Error Fetching Log Activity" });
   }
+});
+
+// router.get("/sendsms",async (req,res)=>{
+//     const { email, password, phone } = req.body;
+//   const user = {
+//     email,
+//     password,
+//     phone
+//   };
+
+//   userDatabase.push(user);
+
+//   res.status(201).send({
+//     message: 'Account created successfully, kindly check your phone to activate your account!',
+//     data: user
+//   })
+// });
+
+router.get("/testing", async (req, res) => {
+  return res.json({ msg: navigator.userAgent });
 });
 
 module.exports = router;

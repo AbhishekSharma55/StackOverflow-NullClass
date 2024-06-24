@@ -16,6 +16,8 @@ import Users from "./pages/Users";
 import EditUser from "./pages/EditUser";
 import VerifyOtp from "./pages/ConfirmOTP";
 import ResetPassword from "./pages/ResetPassword";
+import "./i18next";
+import TEST from "./pages/TEST";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,6 +28,7 @@ root.render(
         <div className="pt-10 md:pl-80 md:pt-12">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/test" element={<TEST />} />
             <Route path="/tags" element={<Tags />} />
             <Route path="/users" element={<Users />} />
             <Route path="/MyProfile" element={<EditUser />} />

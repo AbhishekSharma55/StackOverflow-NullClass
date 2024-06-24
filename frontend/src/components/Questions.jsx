@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { useAlert } from "../context/AlertContext";
+import { useTranslation } from "react-i18next";
 
 const Questions = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -13,7 +14,21 @@ const Questions = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const showAlert = useAlert();
 
+  const {t} = useTranslation();
+
   useEffect(() => {
+
+    // const AuthenticationStatus = async () =>{
+    //   try {
+    //     const response = await axios.get(`${apiUrl}/api/auth/current`);
+    //     if (response.status === 200) {
+    //       console.log("User is authenticated");
+    //     }
+    //   } catch (error) {
+    //     console.log("User is not authenticated");
+    //   }
+    // }
+
     const fetchQuestion = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/questions`);
@@ -42,21 +57,22 @@ const Questions = () => {
     };
     totalQuestions();
     fetchQuestion();
+    // AuthenticationStatus();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ apiUrl ]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t("Loading")}</div>;
   }
 
   if (!questions) {
-    return <div>Questions not found.</div>;
+    return <div>{t("QuestionsNotFound")}</div>;
   }
 
   return (
     <div className="max-w-full">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-bold">All Questions</h1>
+        <h1 className="text-2xl font-bold">{t("AllQuestions")}</h1>
         <button
           type="button"
           onClick={() => {
@@ -65,11 +81,11 @@ const Questions = () => {
           className="bg-blue-500 rounded-md transition ease-in-out delay-10 hover:bg-blue-400 px-4"
         >
           <Link to="/askquestion" className="text-xs text-white">
-            Ask Questions
+            {t("AskQuestions")}
           </Link>
         </button>
       </div>
-      <h1 className="text-sm font-light">{totalQuestions} questions</h1>
+      <h1 className="text-sm font-light">{totalQuestions} {t("questions")}</h1>
       {questions ? (
         questions.map((question) => (
           <Link key={question._id} to={`/question/${question._id}`} >
@@ -112,10 +128,10 @@ const Questions = () => {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      <span>{question.noOfAnswers} answers</span>
+                      <span>{question.noOfAnswers} {t("answers")}</span>
                     </div>
                     <div className="text-sm text-gray-600 break-words">
-                      Asked by @{question.userPosted} on{" "}
+                      {t("AskedBy")} @{question.userPosted} on{" "}
                       {moment(question.askedOn).fromNow()}
                     </div>
                   </div>
@@ -125,7 +141,7 @@ const Questions = () => {
           </Link>
         ))
       ) : (
-        <div>No Questions Found!</div>
+        <div>{t("NoQuestionsFound")}</div>
       )}
     </div>
   );
