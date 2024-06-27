@@ -7,11 +7,16 @@ import { useTranslation } from "react-i18next";
 const NavBar = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
-  const navigate= useNavigate();
-  const {t} = useTranslation();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogoClick = () => {
     navigate("/");
+  };
+
+  const HandleRedirect = (link) => {
+    setShowLogoutButton(false);
+    navigate(link);
   };
 
   const handleUserClick = () => {
@@ -58,12 +63,14 @@ const NavBar = () => {
                 </button>
                 {showLogoutButton && (
                   <div className="absolute right-0 mt-2 bg-white border border-black p-2 text-lg rounded">
-                    <Link
+                    <button
                       className="border border-black m-1 px-2 rounded"
-                      to={"/MyProfile"}
+                      onClick={() => {
+                        HandleRedirect("/MyProfile");
+                      }}
                     >
                       {t("Profile")}
-                    </Link>
+                    </button>
                     <button
                       className="border border-black m-1 px-2 rounded"
                       onClick={logout}
@@ -74,9 +81,14 @@ const NavBar = () => {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="mx-4">
+              <button
+                className="mx-4"
+                onClick={() => {
+                  HandleRedirect("/login");
+                }}
+              >
                 {t("Login")}
-              </Link>
+              </button>
             )}
             <div className="hidden md:flex mx-5 gap-4">
               <Inbox />
