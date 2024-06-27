@@ -6,10 +6,11 @@ const auth = require("../middleware/auth");
 const UserLog = require("../models/UserLog");
 const useragent = require("user-agent-parser");
 const sendEmail = require("./mail");
-const { detect } = require('detect-browser');
+const { detect } = require("detect-browser");
 const browser = detect();
 const router = express.Router();
 require("dotenv").config();
+const client = require("twilio")(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
 // JWT Secret
 const jwtSecret = process.env.JWT_SECRET;
@@ -58,7 +59,7 @@ router.post("/login", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     const payload = { user: { id: user.id, otp } };
     const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
-    
+
     // Send OTP via email
     await sendEmail(user.email, "Your OTP Code", `Your OTP code is ${otp}`);
 
@@ -90,7 +91,7 @@ router.post("/verify-otp", (req, res, next) => {
         os: userAgent.os.name,
         device: userAgent.device.type || "desktop",
       });
-      
+
       console.log(userLog);
       userLog
         .save()
@@ -130,11 +131,28 @@ router.post("/verify-otp-forgot-password", (req, res) => {
   }
 });
 
-router.post("/verify-otp-change-language", (req, res) => {
-  const { token, otp } = req.body;
+router.post("/verify-otp-email", (req, res) => {
+  const { tokenForEmailOTP, OTPForEmail } = req.body;
   try {
-    const decoded = jwt.verify(token, jwtSecret);
-    if (decoded.user.otp === parseInt(otp, 10)) {
+    const decoded = jwt.verify(tokenForEmailOTP, jwtSecret);
+    if (decoded.user.otp === parseInt(OTPForEmail, 10)) {
+      const payload = { user: { id: decoded.user.id } };
+      const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+      res.json({ authToken });
+    } else {
+      res.json({ err: "Invalid OTP" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.json({ err: "Server error" });
+  }
+});
+
+router.post("/verify-otp-phone-number", (req, res) => {
+  const { tokenForPhoneOTP, OTPForPhone } = req.body;
+  try {
+    const decoded = jwt.verify(tokenForPhoneOTP, jwtSecret);
+    if (decoded.user.otp === parseInt(OTPForPhone, 10)) {
       const payload = { user: { id: decoded.user.id } };
       const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
       res.json({ authToken });
@@ -220,8 +238,7 @@ router.get("/MyProfile", auth, async (req, res) => {
   }
 });
 
-
-router.post("/generateotp", async (req, res) => {
+router.post("/emailotp", async (req, res) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -232,14 +249,64 @@ router.post("/generateotp", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     const payload = { user: { id: user.id, otp } };
     const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
-    
+
     // Send OTP via email
-    await sendEmail(user.email, "Your OTP Code For Language Selection to French", `Your OTP code is ${otp}`);
+    await sendEmail(
+      user.email,
+      "Your OTP Code For Language Selection to French",
+      `Your OTP code is ${otp}`
+    );
 
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
+  }
+});
+
+router.post("/phoneotp", async (req, res) => {
+  let { email, phoneNumber } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ err: "Invalid Credentials" });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    const payload = { user: { id: user.id, otp } };
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
+
+    if (!phoneNumber.includes("+")) {
+      phoneNumber = "+91" + phoneNumber;
+    }
+    // Send OTP via phone
+    client.messages.create({
+      body: `your OTP verification for language change is ${otp}`,
+      messagingServiceSid: process.env.MESSAGE_SERVICE_SID,
+      to: phoneNumber,
+    });
+
+    res.json({ token, msg: "OTP sent to your Phone Number" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+}); 
+ 
+router.get("/isloggedin",auth, async (req, res) => {
+  const token = req.header("Authorization").split(" ")[1];
+  const decoded = jwt.verify(token, jwtSecret);
+  const id = decoded.user.id;
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      res.json({ email: user.email, username: user.username });
+    } else {
+      res.json({ err: "User not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.json({ err: "Error Fetching User Profile." });
   }
 });
 

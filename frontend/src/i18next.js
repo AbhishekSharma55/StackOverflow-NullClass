@@ -65,7 +65,13 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 SignIn: "Sign in",
                 TagDescription: "A tag is a word or phrase that describes the topic of the question. Tags are a means of connecting experts with questions they will be able to answer by sorting questions into specific, well-defined categories.",
                 User: "User",
-                UserCreated: "User Created"
+                UserCreated: "User Created",
+                SelectLanguage: "Select your language",
+                ChangeLanguagePhoneOTP: "Changing Language other than French needs Phone OTP verification.",
+                ChangeLanguageEmailOTP: "Changing Language to French needs Email OTP verification.",
+                GenerateOTP: "Generate OTP",
+                OTPSendEmail: "OTP Sent to Your Email Address.",
+                OTPSendPhone: "OTP Sent to Your Phone Number."
             }
         },
         es : {
@@ -127,7 +133,13 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 SignIn: "Iniciar sesión",
                 TagDescription: "Una etiqueta es una palabra o frase que describe el tema de la pregunta. Las etiquetas son un medio para conectar a los expertos con preguntas que podrán responder al clasificar las preguntas en categorías específicas y bien definidas.",
                 User: "Usuario",
-                UserCreated: "Usuario Creado"
+                UserCreated: "Usuario Creado",
+                SelectLanguage: "Selecciona tu idioma",
+                ChangeLanguagePhoneOTP: "Cambiar el idioma distinto al francés necesita verificación de OTP por teléfono.",
+                ChangeLanguageEmailOTP: "Cambiar el idioma al francés necesita verificación de OTP por correo electrónico.",
+                GenerateOTP: "Generar OTP",
+                OTPSendEmail: "OTP enviado a tu dirección de correo electrónico.",
+                OTPSendPhone: "OTP enviado a tu número de teléfono."
             }
         },
         hi : {
@@ -189,7 +201,13 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 SignIn: "साइन इन",
                 TagDescription: "टैग एक शब्द या वाक्य है जो प्रश्न के विषय का वर्णन करता है। टैग्स एक उपाय हैं जिससे विशेषज्ञों को उन प्रश्नों से जो वे उत्तर दे सकते हैं को जोड़ने का साधन है विशिष्ट, स्पष्ट-परिभाषित श्रेणियों में सवालों को वर्गीकृत करके।",
                 User: "उपयोगकर्ता",
-                UserCreated: "उपयोगकर्ता बनाया गया"
+                UserCreated: "उपयोगकर्ता बनाया गया",
+                SelectLanguage: "अपनी भाषा चुनें",
+                ChangeLanguagePhoneOTP: "फ्रेंच के अलावा अन्य भाषा बदलने के लिए फोन OTP सत्यापन की आवश्यकता है।",
+                ChangeLanguageEmailOTP: "फ्रेंच में बदलने के लिए ईमेल OTP सत्यापन की आवश्यकता है।",
+                GenerateOTP: "OTP उत्पन्न करें",
+                OTPSendEmail: "OTP आपके ईमेल पते पर भेजा गया।",
+                OTPSendPhone: "OTP आपके फोन नंबर पर भेजा गया।"
             }
         },
         pt : {
@@ -251,7 +269,13 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 SignIn: "Entrar",
                 TagDescription: "Uma tag é uma palavra ou frase que descreve o tópico da pergunta. Tags são um meio de conectar especialistas com perguntas que eles serão capazes de responder, classificando perguntas em categorias específicas e bem definidas.",
                 User: "Usuário",
-                UserCreated: "Usuário Criado"
+                UserCreated: "Usuário Criado",
+                SelectLanguage: "Selecione seu idioma",
+                ChangeLanguagePhoneOTP: "Mudar o idioma além do francês precisa de verificação de OTP por telefone.",
+                ChangeLanguageEmailOTP: "Mudar o idioma para o francês precisa de verificação de OTP por e-mail.",
+                GenerateOTP: "Gerar OTP",
+                OTPSendEmail: "OTP enviado para seu endereço de e-mail.",
+                OTPSendPhone: "OTP enviado para seu número de telefone."
             }
         },
         zh : {
@@ -313,7 +337,13 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 SignIn: "登录",
                 TagDescription: "标签是描述问题主题的单词或短语。标签是通过将问题分类到特定的、明确定义的类别中，连接专家和他们能够回答的问题的一种方式。",
                 User: "用户",
-                UserCreated: "用户创建"
+                UserCreated: "用户创建",
+                SelectLanguage: "选择你的语言",
+                ChangeLanguagePhoneOTP: "更改语言需要手机 OTP 验证。",
+                ChangeLanguageEmailOTP: "更改语言为法语需要电子邮件 OTP 验证。",
+                GenerateOTP: "生成 OTP",
+                OTPSendEmail: "OTP 已发送到您的电子邮件地址。",
+                OTPSendPhone: "OTP 已发送到您的手机号码。"
             }
         },
         fr : {
@@ -344,38 +374,44 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 OpenSourceDevelopment: "Un paradigme de développement open-source",
                 FeaturedOnMeta: "En vedette sur Meta",
                 TestingNewVersionJobs: "Test d'une nouvelle version de Stack Overflow Jobs",
-                WorkingGroupDeliverables: "Quels livrables aimeriez-vous voir d'un groupe de travail ?",
+                WorkingGroupDeliverables: "Quels livrables aimeriez-vous voir d'un groupe de travail?",
                 PriceTagBurninated: "Le tag [price] est en train de brûler",
-                DeveloperSurveyLive: "L'enquête sur les développeurs 2024 est en direct",
+                DeveloperSurveyLive: "L'enquête des développeurs 2024 est en direct",
                 GetAnswersFromCommunity: "Obtenez des réponses à vos questions de notre communauté d'experts.",
                 QuestionTitle: "Titre de la question",
                 QuestionBody: "Corps de la question",
                 VerifyOTP: "Vérifier OTP",
                 OTP: "OTP",
                 RecentLogins: "Connexions récentes",
-                UpdateYourAccount: "Mettre à jour votre compte",
-                OverwriteAndUpdateDetails: "Écrasez les détails mis à jour et appuyez sur mettre à jour pour mettre à jour vos détails personnels.",
+                UpdateYourAccount: "Mettez à jour votre compte",
+                OverwriteAndUpdateDetails: "Remplacer les détails mis à jour et appuyer sur mettre à jour pour mettre à jour vos informations personnelles.",
                 Name: "Nom",
-                Email: "Email",
+                Email: "E-mail",
                 UpdateDetails: "Mettre à jour les détails",
                 IPAddress: "Adresse IP",
                 Browser: "Navigateur",
-                OperatingSystem: "Système d'exploitation",
+                OperatingSystem: "OS",
                 Device: "Appareil",
                 SignInToYourAccount: "Connectez-vous à votre compte",
                 Password: "Mot de passe",
-                ForgotYourPassword: "Mot de passe oublié ?",
+                ForgotYourPassword: "Mot de passe oublié?",
                 ResetPassword: "Réinitialiser ici",
-                DontHaveAnAccount: "Pas encore de compte ?",
+                DontHaveAnAccount: "Vous n'avez pas de compte?",
                 RegisterHere: "Inscrivez-vous ici",
                 ConfirmPassword: "Confirmer le mot de passe",
                 CreateAccount: "Créer un compte",
-                EnterDetailsToSignUp: "Entrez vos détails ci-dessous pour vous inscrire à un nouveau compte.",
-                AlreadyHaveAnAccount: "Vous avez déjà un compte ?",
+                EnterDetailsToSignUp: "Entrez vos coordonnées ci-dessous pour vous inscrire à un nouveau compte.",
+                AlreadyHaveAnAccount: "Vous avez déjà un compte?",
                 SignIn: "Se connecter",
-                TagDescription: "Un tag est un mot ou une phrase qui décrit le sujet de la question. Les tags sont un moyen de connecter les experts aux questions qu'ils pourront répondre en classant les questions dans des catégories spécifiques et bien définies.",
+                TagDescription: "Un tag est un mot ou une phrase qui décrit le sujet de la question. Les tags sont un moyen de connecter les experts avec les questions auxquelles ils pourront répondre en triant les questions en catégories spécifiques et bien définies.",
                 User: "Utilisateur",
-                UserCreated: "Utilisateur créé"
+                UserCreated: "Utilisateur créé",
+                SelectLanguage: "Sélectionnez votre langue",
+                ChangeLanguagePhoneOTP: "Changer la langue autre que le français nécessite une vérification OTP par téléphone.",
+                ChangeLanguageEmailOTP: "Changer la langue en français nécessite une vérification OTP par e-mail.",
+                GenerateOTP: "Générer OTP",
+                OTPSendEmail: "OTP envoyé à votre adresse e-mail.",
+                OTPSendPhone: "OTP envoyé à votre numéro de téléphone."
             }
         }
     }

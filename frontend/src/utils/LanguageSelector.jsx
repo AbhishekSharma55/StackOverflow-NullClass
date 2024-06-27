@@ -9,13 +9,21 @@ const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const showAlert = useAlert();
-  const [token, setToken] = useState("");
+  const [tokenForEmailOTP, setTokenForEmailOTP] = useState("");
+  const [tokenForPhoneOTP, setTokenForPhoneOTP] = useState("");
+  const [selectedLanguageName, setSelectedLanguageName] = useState("English");
+  const [selectedLanguageCode, setSelectedLanguageCode] = useState("English");
   const [frenchSelected, setFrenchSelected] = useState(false);
-  const [generateOTPBUtton, setGenerateOTPButton] = useState(false);
+  const [generateOTPBUttonForFrench, setGenerateOTPButtonForFrench] = useState(false);
+  const [languageChanged, setLanguageChanged] = useState(false);
+  const [generatePhoneOTPButton, setGeneratePhoneOTPButton] = useState(false);
+  const [verifyOTPButtonForFrench, setVerifyOTPButtonForFrench] = useState(false);
   const [verifyOTPButton, setVerifyOTPButton] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const [OTPForEmail, setOTPForEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [OTPForPhone, setOTPForPhone] = useState("");
   const { t } = useTranslation();
-  const [otp, setOtp] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const Languages = [
     { code: "en", lang: "English" },
@@ -27,28 +35,46 @@ const LanguageSelector = () => {
   ];
 
   const changeLanguage = (languageCode, languageName) => {
-    if (languageCode === "fr") {
+    setSelectedLanguageName(languageName);
+    setSelectedLanguageCode(languageCode);
+    if (languageCode === localStorage.getItem("i18nextLng")) {
+      showAlert("Language already selected", "success");
+      console.log("Language already selected");
+      setLanguageChanged(false);
+      setGeneratePhoneOTPButton(false);
+      setFrenchSelected(false);
+      setGenerateOTPButtonForFrench(false);
+      // i18n.changeLanguage(languageCode);
+      // showAlert("Language changed to " + languageName, "success");
+      // localStorage.setItem("language", languageCode);
+      // navigate("/");
+    }
+    else if (languageCode === "fr") {
       setFrenchSelected(true);
-      setGenerateOTPButton(true);
-    } else {
-      i18n.changeLanguage(languageCode);
-      showAlert("Language changed to " + languageName, "success");
-      localStorage.setItem("language", languageCode);
-      navigate("/");
+      setGenerateOTPButtonForFrench(true);
+      setLanguageChanged(false);
+      setGeneratePhoneOTPButton(false);
+    }
+     else {
+      setLanguageChanged(true);
+      setGeneratePhoneOTPButton(true);
+      setFrenchSelected(false);
+      setGenerateOTPButtonForFrench(false);
     }
   };
 
-  const GenerateOTP = async (e) => {
+  const GenerateOTPForFrench = async (e) => {
     e.preventDefault();
     try {
       const user = await getCurrentUser();
-      const response = await axios.post(`${apiUrl}/api/auth/generateotp`, {
+      const response = await axios.post(`${apiUrl}/api/auth/emailotp`, {
         email: user.email,
       });
       if (!response.data.err) {
-        setToken(response.data.token);
-        setGenerateOTPButton(false);
-        setVerifyOTPButton(true);
+        console.log(response.data.token)
+        setTokenForEmailOTP(response.data.token);
+        setGenerateOTPButtonForFrench(false);
+        setVerifyOTPButtonForFrench(true);
         showAlert("OTP sent to your email.", "success");
       } else {
         showAlert(response.data.err, "error");
@@ -58,14 +84,14 @@ const LanguageSelector = () => {
     }
   };
 
-  const handleVerifyOtp = async (e) => {
+  const handleVerifyOtpForFrench = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${apiUrl}/api/auth/verify-otp-change-language`,
+        `${apiUrl}/api/auth/verify-otp-email`,
         {
-          otp,
-          token,
+          OTPForEmail,
+          tokenForEmailOTP,
         }
       );
       if (!response.data.err) {
@@ -81,10 +107,54 @@ const LanguageSelector = () => {
     }
   };
 
+  const GenerateOTPForPhone = async (e) => {
+    e.preventDefault();
+    try {
+      const user = await getCurrentUser();
+      const response = await axios.post(`${apiUrl}/api/auth/phoneotp`, {
+        phoneNumber: phoneNumber,
+        email: user.email,
+      });
+      if (!response.data.err) {
+        setTokenForPhoneOTP(response.data.token);
+        setGeneratePhoneOTPButton(false);
+        setVerifyOTPButton(true);
+        showAlert("OTP sent to your Phone Number.", "success");
+      } else {
+        showAlert(response.data.err, "error");
+      }
+    } catch (err) {
+      showAlert("Login failed. Please try again.", "error");
+    }
+  };
+
+  const handleVerifyOTPForPhone = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/auth/verify-otp-phone-number`,
+        {
+          OTPForPhone,
+          tokenForPhoneOTP,
+        }
+      );
+      if (!response.data.err) {
+        i18n.changeLanguage("fr");
+        showAlert(`Language changed to ${selectedLanguageName}`, "success");
+        localStorage.setItem("language", selectedLanguageCode);
+        navigate("/");
+      } else {
+        showAlert(response.data.err, "error");
+      }
+    } catch (err) {
+      showAlert("Login failed. Please try again.", "error");
+    }
+  };
+
   return (
     <div className="border border-gray-400 rounded-lg">
       <h4 className="text-center align-middle h-full text-4xl my-4 mx-4">
-        Select your language
+        {t("SelectLanguage")}
       </h4>
       <div className="flex m-5 p-4">
         <ul className="grid md:flex w-full text-center justify-center gap-4">
@@ -104,32 +174,35 @@ const LanguageSelector = () => {
       {frenchSelected && (
         <div className="text-center mx-10 mb-10">
           <h1 className="text-xl">
-            Changing Language to French needs OTP verfication.
+           {t("ChangeLanguageEmailOTP")}
           </h1>
-          <form className="space-y-4 mt-4 md:mx-10" onSubmit={handleVerifyOtp}>
-            {generateOTPBUtton ? (
+          <form
+            className="space-y-4 mt-4 md:mx-10"
+            onSubmit={handleVerifyOtpForFrench}
+          >
+            {generateOTPBUttonForFrench ? (
               <button
-                onClick={GenerateOTP}
+                onClick={GenerateOTPForFrench}
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                Generate OTP
+                {t("GenerateOTP")}
               </button>
             ) : (
               <div>
                 <p className="text-xl font-bold ">
-                  OTP Send to Your Email Address.
+                  {t("OTPSendEmail")}
                 </p>
               </div>
             )}
-            {verifyOTPButton && (
+            {verifyOTPButtonForFrench && (
               <div className="grid gap-2">
                 <input
                   id="otp"
                   type="text"
                   placeholder="Enter OTP"
                   className="border p-2 rounded w-full"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+                  value={OTPForEmail}
+                  onChange={(e) => setOTPForEmail(e.target.value)}
                 />
                 <button
                   type="submit"
@@ -140,6 +213,62 @@ const LanguageSelector = () => {
               </div>
             )}
           </form>
+        </div>
+      )}
+      {languageChanged && (
+        <div className="text-center mx-10 mb-10">
+          {generatePhoneOTPButton ? (
+            <form onSubmit={GenerateOTPForPhone}>
+          <h1 className="text-xl">
+            {t("ChangeLanguagePhoneOTP")}
+          </h1>
+              <input
+                className="border border-black w-full py-2 my-5"
+                placeholder="Phone Number (+91)"
+                required
+                type="number"
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              ></input>
+              <button
+                // onClick={GenerateOTP}
+                type="submit"
+                className="w-full bg-orange-500 text-white p-2 rounded"
+              >
+                {t("GenerateOTP")}
+              </button>
+            </form>
+          ) : (
+            <div>
+              <p className="text-xl font-bold ">
+                {t("OTPSendPhone")}
+              </p>
+            </div>
+          )}
+          {verifyOTPButton && (
+            <form
+              className="space-y-4 mt-4 md:mx-10"
+              onSubmit={handleVerifyOTPForPhone}
+            >
+              <div className="grid gap-2">
+                <input
+                  id="otp"
+                  type="text"
+                  placeholder="Enter OTP"
+                  className="border p-2 rounded w-full"
+                  value={OTPForPhone}
+                  onChange={(e) => setOTPForPhone(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-orange-500 text-white p-2 rounded"
+                >
+                  {t("VerifyOTP")}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       )}
     </div>

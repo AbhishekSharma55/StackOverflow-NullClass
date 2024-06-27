@@ -2,14 +2,12 @@
 const express = require("express");
 const Question = require("../models/Question.js");
 const UserLog = require("../models/UserLog.js");
-const useragent = require("user-agent-parser");
 const Answer = require("../models/Answer.js");
 const User = require("../models/User.js");
 const auth = require("../middleware/auth.js"); // Assuming you have an auth middleware
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
-const { detect } = require("detect-browser");
-const browser = detect();
+
 
 // Route to submit a question
 router.post(
@@ -284,9 +282,5 @@ router.get("/user/loginactivity", auth, async (req, res) => {
 //     data: user
 //   })
 // });
-
-router.get("/testing", async (req, res) => {
-  return res.json({ msg: navigator.userAgent });
-});
 
 module.exports = router;
