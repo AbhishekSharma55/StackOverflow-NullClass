@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { CircleArrowUp, CircleArrowDown } from "lucide-react";
-import SideBarContent from "./SideBarContent";
+import SideBarContent from "./common/SideBar2";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertContext";
 import moment from "moment";
@@ -222,7 +222,7 @@ const QuestionDetail = () => {
   return (
     <div className="container lg:pr-40 md:flex md:justify-">
       <div className="w-full md:w-3/4">
-        <div className="bg-white shadow-md p-4 mb-4">
+        <div className="bg-white shadow-lg rounded-xl -md p-4 mb-4">
           <h1 className="text-2xl font-bold">{question.question}</h1>
           <div className="flex flex-wrap mt-2">
             {question.questionTags.map((tag) => (
@@ -241,7 +241,7 @@ const QuestionDetail = () => {
             </div>
             <div className="text-sm">
               <button
-                className="border border-black rounded p-1"
+                className="border border-black rounded p-1 text-xs"
                 onClick={deleteQuestion}
               >
                 {t("DeleteQuestion")}
@@ -249,7 +249,7 @@ const QuestionDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex bg-white shadow-md p-4 mb-4">
+        <div className="flex bg-white shadow-lg rounded-xl -md p-4 mb-4">
           <div>
             <button
               onClick={() => {
@@ -271,12 +271,9 @@ const QuestionDetail = () => {
           </div>
           <p className="text-gray-600 p-4 text-xl">{question.questionBody}</p>
         </div>
-        <div className="bg-white shadow-md p-4 mb-4">
-          <h1 className="text-2xl font-bold">{t("answers")} {question.noOfAnswers}</h1>
-        </div>
         <div>
           {answers.map((answer, index) => (
-            <div className="bg-white shadow-md p-4 mb-4" key={answer._id}>
+            <div className="bg-white shadow-lg rounded-xl -md p-4 mb-4" key={answer._id}>
               <div className="flex flex-col">
                 <div className="text-xl font-bold">{t("answers")} {index + 1}</div>
               </div>
@@ -290,7 +287,7 @@ const QuestionDetail = () => {
                     onClick={() => {
                       deleteAnswer(index);
                     }}
-                    className="border border-black rounded p-1"
+                    className="border border-black rounded p-1 text-xs"
                   >
                     {t("DeleteAnswer")}
                   </button>
@@ -314,7 +311,7 @@ const QuestionDetail = () => {
                 id="answer"
                 name="answer"
                 rows={3}
-                className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-orange-500 focus:border-orange-500 border border-gray-300 rounded-md"
+                className="mt-1 block w-full shadow-lg rounded-xl -sm sm:text-sm focus:ring-orange-500 focus:border-orange-500 border border-gray-300 rounded-md"
                 value={answer}
                 onChange={handleAnswerChange}
                 required
@@ -324,7 +321,7 @@ const QuestionDetail = () => {
               <button
                 type="submit"
                 value="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-lg rounded-xl -sm text-sm font-medium text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               >
                 {t("SubmitAnswer")}
               </button>

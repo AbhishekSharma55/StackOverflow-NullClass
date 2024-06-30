@@ -1,0 +1,7 @@
+.button-open{
+    border: 2px solid rounded;
+    border-color : orange;
+}
+.content-open{
+    opacity: 1;
+}

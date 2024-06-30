@@ -7,6 +7,9 @@ const User = require("../models/User.js");
 const auth = require("../middleware/auth.js"); // Assuming you have an auth middleware
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const useragent = require("user-agent-parser");
+const { detect } = require("detect-browser");
+const browser = detect();
 
 
 // Route to submit a question
@@ -266,6 +269,38 @@ router.get("/user/loginactivity", auth, async (req, res) => {
     res.json({ err: "Error Fetching Log Activity" });
   }
 });
+
+  router.post("/testing", async (req, res) => {
+    // const userAgent = useragent(req.headers["user-agent"]);
+    // const userLog = new UserLog({
+    //   ip: req.ip,
+    //   // user: decoded.user.id,
+    //   browser: userAgent.browser.name,
+    //   os: userAgent.os.name,
+    //   device: userAgent.device.type || "desktop",
+    // });
+    // let msg = "";
+    // function myFunction() {
+    //   if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+    //     msg = 'Opera';
+    //   } else if (navigator.userAgent.indexOf("Edg") != -1) {
+    //     msg = 'Edge';
+    //   } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+    //     msg = 'Chrome';
+    //   } else if (navigator.userAgent.indexOf("Safari") != -1) {
+    //     msg = 'Safari';
+    //   } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+    //     msg = 'Firefox';
+    //   } else if ((navigator.userAgent.indexOf("MSIE") != -1))
+    //   {
+    //     msg = 'IE';
+    //   } else {
+    //     msg = 'unknown';
+    //   }
+    // }
+    // myFunction();
+    // res.json({ msg: msg });
+  });
 
 // router.get("/sendsms",async (req,res)=>{
 //     const { email, password, phone } = req.body;

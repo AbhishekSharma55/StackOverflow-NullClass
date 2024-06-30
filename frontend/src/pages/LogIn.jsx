@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useAlert } from "../context/AlertContext";
 import { useTranslation } from "react-i18next";
+import BrowserDetector from "./TypeOfBrowser";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -35,13 +36,14 @@ const Login = () => {
       showAlert("Login failed. Please try again.", "error");
     }
   };
-
+  const browser = BrowserDetector();
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${apiUrl}/api/auth/verify-otp`, {
         token,
         otp,
+        browser
       });
 
       if (!response.data.err) {

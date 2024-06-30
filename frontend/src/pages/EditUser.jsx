@@ -111,7 +111,7 @@ const EditUser = () => {
   };
 
   return (
-    <div className="flex flex-col p-10 gap-20">
+    <div className="flex flex-col p-10 w-full gap-20">
       <h2 className="text-4xl text-center">{t("UpdateYourAccount")}</h2>
       <main className="flex-1 flex items-center justify-center px-4 md:px-6">
         <div className="w-full max-w-md border p-4 rounded shadow">

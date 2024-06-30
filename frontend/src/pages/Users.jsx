@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useAlert } from "../context/AlertContext";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [Users, setUsers] = useState([]);
   const showAlert = useAlert();
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -24,7 +25,7 @@ const Users = () => {
   }, [showAlert, apiUrl]);
 
   const editUser = (_id) => {
-    window.location.href = `/user/${_id}`;
+    navigate(`/user/${_id}`);
   };
 
   return (
@@ -35,12 +36,12 @@ const Users = () => {
           return (
             <div key={user._id}>
               <button
-                className="border border-gray-400 h-50 flex-wrap "
+                className="border border-gray-400 h-50 flex-wrap rounded-xl"
                 onClick={() => {
                   editUser(user._id);
                 }}
               >
-                <p className="text-center text-xl pb-2 bg-orange-200">
+                <p className="text-center text-xl pb-2 bg-orange-200 rounded-t-xl">
                   {user.username}
                 </p>
                 <div className="p-4">

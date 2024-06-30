@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import QuestionDetail from "./components/QuestionDetail";
-import CommonBar from "./components/CommonBar";
+import CommonBar from "./components/common/CommonBar";
 import AskQuestion from "./pages/AskQuestion";
 import AuthProvider from "./context/AuthContext";
 import { AlertProvider } from "./context/AlertContext";
