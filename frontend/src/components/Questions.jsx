@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CircleArrowUp } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ const Questions = () => {
   const [loading, setLoading] = useState(true);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const showAlert = useAlert();
-
+  const navigate = useNavigate();
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const Questions = () => {
         <button
           type="button"
           onClick={() => {
-            window.location.href = "/askquestion";
+            navigate("/askquestion");
           }}
           className="bg-blue-500 rounded-md transition ease-in-out delay-10 hover:bg-blue-400 px-4"
         >
@@ -89,7 +89,7 @@ const Questions = () => {
       {questions ? (
         questions.map((question) => (
           <Link key={question._id} to={`/question/${question._id}`} >
-            <div className="bg-white shadow p-4 my-4 max-w-full hover:shadow-xl" >
+            <div className="bg-white shadow p-4 my-4 max-w-full hover:shadow-xl border rounded-xl" >
               <div className="flex flex-col justify-between items-start">
                 <div className="w-full">
                   <h2 className="text-xl font-bold break-words">

@@ -1,4 +1,3 @@
-// src/pages/AskQuestion.jsx
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +33,7 @@ const AskQuestion = () => {
       const response = await axios.post(`${apiUrl}/api/postquestion`, { title, questionBody, questionTags }, config);
 
       if (response.status === 200) {
-        navigate('/'); // Redirect to home or questions page
+        navigate('/');
         showAlert('Question submitted successfully', 'success');
       } else {
         setError('Failed to submit the question. Please try again.');

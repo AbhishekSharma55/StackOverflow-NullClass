@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import React, { useContext, useEffect } from "react";
-import SideBarContent from "../components/SideBarContent";
+import SideBarContent from "../components/common/SideBar2";
 import Questions from "../components/Questions";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -38,7 +38,6 @@ const Home = () => {
 
   useEffect(() => {
     const CheckLoginStatus = async () => {
-      console.log("checking session");
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -65,7 +64,6 @@ const Home = () => {
       }
     };
     CheckLoginStatus();
-    console.log("Session found");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

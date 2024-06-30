@@ -14,7 +14,7 @@ i18next.use(LanguageDetector).use(initReactI18next).init({
                 QuestionsNotFound: "Questions not found.",
                 AskQuestions: "Ask Questions",
                 questions: "questions",
-                answers: "answers",
+                answers: "answer",
                 AskedBy: "Asked by",
                 NoQuestionsFound: "No Questions Found!",
                 Products: "Products",

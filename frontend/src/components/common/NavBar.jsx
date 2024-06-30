@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Inbox, Search, Trophy, User, CircleHelp, Rows3 } from "lucide-react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
@@ -24,7 +24,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav id="navbar" className="fixed bg-white w-full z-20">
+    <nav id="navbar" className="absolute bg-white w-full z-20">
       <div className="flex align-middle items-center p-2 md:px-10">
         <div className="flex items-center justify-between w-full">
           <button className="w-auto pr-5" onClick={handleLogoClick}>
@@ -49,7 +49,7 @@ const NavBar = () => {
                 <Search className="h-5 w-5 opacity-50 mx-1" />
                 <input
                   type="text"
-                  className="outline-none text-slate-500 w-full"
+                  className="outline-none bg-transparent text-slate-500 w-full"
                   placeholder="Search..."
                 />
               </div>
@@ -62,9 +62,9 @@ const NavBar = () => {
                   <User className="mx-4" />
                 </button>
                 {showLogoutButton && (
-                  <div className="absolute right-0 mt-2 bg-white border border-black p-2 text-lg rounded">
+                  <div className="absolute right-0 mt-2 bg-transparent border border-black text-lg rounded bg-white">
                     <button
-                      className="border border-black m-1 px-2 rounded"
+                      className="m-1 px-2 rounded text-xs"
                       onClick={() => {
                         HandleRedirect("/MyProfile");
                       }}
@@ -72,7 +72,7 @@ const NavBar = () => {
                       {t("Profile")}
                     </button>
                     <button
-                      className="border border-black m-1 px-2 rounded"
+                      className="m-1 px-2 rounded text-xs"
                       onClick={logout}
                     >
                       {t("Logout")}

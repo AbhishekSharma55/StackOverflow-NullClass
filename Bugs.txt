@@ -4,3 +4,5 @@
 
 
 2) learn authcontext.js
+
+3) colour change bug , reimplement

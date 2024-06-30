@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
 
 // Verify OTP
 router.post("/verify-otp", (req, res, next) => {
-  const { token, otp } = req.body;
+  const { token, otp,browser } = req.body;
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
@@ -80,19 +80,14 @@ router.post("/verify-otp", (req, res, next) => {
       const payload = { user: { id: decoded.user.id } };
       const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
       const userAgent = useragent(req.headers["user-agent"]);
-      let browserName = null;
-      if (browser) {
-        browserName = browser.name;
-      }
       const userLog = new UserLog({
         ip: req.ip,
         user: decoded.user.id,
-        browser: browserName,
+        browser: browser,
         os: userAgent.os.name,
         device: userAgent.device.type || "desktop",
       });
 
-      console.log(userLog);
       userLog
         .save()
         .then(() => {

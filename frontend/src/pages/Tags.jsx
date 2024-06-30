@@ -122,8 +122,8 @@ const Tags = () => {
         <div className='flex flex-wrap gap-4 m-10'>
             {Tags.map((tag)=>{
                 return(
-                    <div key={tag.tag} className='border border-gray-400 h-50 w-40 '>
-                        <p className='text-center text-xl pb-2 bg-orange-200'>{tag.tag}</p>
+                    <div key={tag.tag} className='border border-gray-400 h-50 w-40 rounded-xl'>
+                        <p className='text-center text-xl pb-2 bg-orange-200 rounded-t-xl'>{tag.tag}</p>
                         <p className='text-center p-3'>{tag.description}</p>
                     </div>
                 )
