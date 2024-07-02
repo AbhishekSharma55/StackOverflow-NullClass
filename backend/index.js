@@ -9,12 +9,6 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-const corsOptions ={
-   origin:['https://stack-overflow-null-class-backend.vercel.app','http://localhost:3000'], 
-   credentials:true,
-   optionSuccessStatus:200,
-}
-app.use(cors(corsOptions))
 
 // Connect to MongoDB
 connectDB();
@@ -22,6 +16,12 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+app.use(cors(corsOptions))
 
 // Routes
 app.get("/", (req, res) => {
