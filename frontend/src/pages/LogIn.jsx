@@ -13,37 +13,59 @@ const Login = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
-  const { login , completeLogin} = useContext(AuthContext);
+  const { login, completeLogin } = useContext(AuthContext);
   const apiUrl = process.env.REACT_APP_API_URL;
   const showAlert = useAlert();
   const { t } = useTranslation();
+  const browser = BrowserDetector();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
-    try {
-      const response = await axios.post(`${apiUrl}/api/auth/login`, {
-        email,
-        password,
-      });
-      if (!response.data.err) {
-        setToken(response.data.token);
-        setShowOtpInput(true);
-        showAlert("OTP sent to your email.", "success");
-      } else {
-        showAlert(response.data.err,"error");
+    e.preventDefault();
+    if (browser === "Microsoft Edge") {
+      try {
+        const response = await axios.post(`${apiUrl}/api/auth/no-otp-required`, {
+          email,
+          password,
+          browser
+        });
+  
+        if (!response.data.err) {
+          login(response.data.authToken);
+          completeLogin();
+          navigate("/", { replace: true });
+          showAlert("Logged in successfully!", "success");
+        } else {
+          showAlert("Some Unexpected Error Occured !", "error");
+        }
+      } catch (err) {
+        showAlert("Verification failed. Please try again.", "error");
       }
-    } catch (err) {
-      showAlert("Login failed. Please try again.", "error");
+
+    } else {
+      try {
+        const response = await axios.post(`${apiUrl}/api/auth/login`, {
+          email,
+          password,
+        });
+        if (!response.data.err) {
+          setToken(response.data.token);
+          setShowOtpInput(true);
+          showAlert("OTP sent to your email.", "success");
+        } else {
+          showAlert(response.data.err, "error");
+        }
+      } catch (err) {
+        showAlert("Login failed. Please try again.", "error");
+      }
     }
   };
-  const browser = BrowserDetector();
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${apiUrl}/api/auth/verify-otp`, {
         token,
         otp,
-        browser
+        browser,
       });
 
       if (!response.data.err) {

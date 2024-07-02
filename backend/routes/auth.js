@@ -56,6 +56,14 @@ router.post("/login", async (req, res) => {
       return res.json({ err: "Invalid Credentials" });
     }
 
+<<<<<<< HEAD
+=======
+    const userAgent = useragent(req.headers["user-agent"]);
+    if(userAgent.os.name === "Android"){
+      res.json({err: "Please use a desktop browser to login."});
+    }
+
+>>>>>>> TempBranch
     const otp = Math.floor(100000 + Math.random() * 900000);
     const payload = { user: { id: user.id, otp } };
     const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
@@ -72,7 +80,11 @@ router.post("/login", async (req, res) => {
 
 // Verify OTP
 router.post("/verify-otp", (req, res, next) => {
+<<<<<<< HEAD
   const { token, otp,browser } = req.body;
+=======
+  const { token, otp, browser } = req.body;
+>>>>>>> TempBranch
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
@@ -106,6 +118,48 @@ router.post("/verify-otp", (req, res, next) => {
     res.json({ err: "Server error" });
   }
 });
+<<<<<<< HEAD
+=======
+router.post("/no-otp-required", async (req, res,next) => {
+  const { email, password , browser } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ err: "Invalid Credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.json({ err: "Invalid Credentials" });
+    }
+    const payload = { user: { id: user.id } };
+    const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+    const userAgent = useragent(req.headers["user-agent"]);
+    const userLog = new UserLog({
+      ip: req.ip,
+      user: user.id,
+      browser: browser,
+      os: userAgent.os.name,
+      device: userAgent.device.type || "desktop",
+    });
+    console.log(userLog)
+    userLog
+      .save()
+      .then(() => {
+        next();
+      })
+      .catch((err) => {
+        console.error("Error saving user log:", err);
+        next();
+      });
+    res.json({ authToken });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+>>>>>>> TempBranch
 
 // Verify OTP
 router.post("/verify-otp-forgot-password", (req, res) => {
@@ -286,9 +340,15 @@ router.post("/phoneotp", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error");
   }
+<<<<<<< HEAD
 }); 
  
 router.get("/isloggedin",auth, async (req, res) => {
+=======
+});
+
+router.get("/isloggedin", auth, async (req, res) => {
+>>>>>>> TempBranch
   const token = req.header("Authorization").split(" ")[1];
   const decoded = jwt.verify(token, jwtSecret);
   const id = decoded.user.id;
