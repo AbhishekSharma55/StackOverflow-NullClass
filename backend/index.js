@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 4000;
 const corsOptions ={
-   origin:['https://stack-overflow-null-class-frontend.vercel.app','http://localhost:3000'], 
+   origin:['https://stack-overflow-null-class-backend.vercel.app','http://localhost:3000'], 
    credentials:true,
    optionSuccessStatus:200,
 }
