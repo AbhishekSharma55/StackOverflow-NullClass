@@ -10,7 +10,10 @@ const { detect } = require("detect-browser");
 const browser = detect();
 const router = express.Router();
 require("dotenv").config();
-const client = require("twilio")(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
+const client = require("twilio")(
+  process.env.ACCOUNT_SID,
+  process.env.AUTH_TOKEN
+);
 
 // JWT Secret
 const jwtSecret = process.env.JWT_SECRET;
@@ -56,7 +59,6 @@ router.post("/login", async (req, res) => {
       return res.json({ err: "Invalid Credentials" });
     }
 
-
     const userAgent = useragent(req.headers["user-agent"]);
     if(userAgent.os.name === "Android"){
       res.json({err: "Please use a desktop browser to login."});
@@ -78,7 +80,7 @@ router.post("/login", async (req, res) => {
 
 // Verify OTP
 router.post("/verify-otp", (req, res, next) => {
-  const { token, otp,browser } = req.body;
+  const { token, otp, browser } = req.body;
 
   try {
     const decoded = jwt.verify(token, jwtSecret);

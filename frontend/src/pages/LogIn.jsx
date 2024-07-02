@@ -74,7 +74,7 @@ const Login = () => {
         navigate("/", { replace: true });
         showAlert("Logged in successfully!", "success");
       } else {
-        showAlert("Invalid OTP. Please try again.","error");
+        showAlert("Invalid OTP. Please try again.", "error");
       }
     } catch (err) {
       showAlert("Verification failed. Please try again.", "error");
@@ -134,9 +134,7 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-orange-500 text-white p-2 rounded"
               >
-                {t(
-                  "SignIn"
-                )}
+                {t("SignIn")}
               </button>
             </form>
           )}
