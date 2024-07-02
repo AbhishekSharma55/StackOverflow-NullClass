@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
       return res.json({ err: "Invalid Credentials" });
     }
 
-    const userAgent = useragent.parse(req.headers["user-agent"]);
+    const userAgent = useragent(req.headers["user-agent"]);
     const isMobileDevice = userAgent.device.family === "iPhone" || userAgent.device.family === "Android";
 
     if (isMobileDevice) {
