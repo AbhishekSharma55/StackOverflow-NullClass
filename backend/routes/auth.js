@@ -59,9 +59,17 @@ router.post("/login", async (req, res) => {
       return res.json({ err: "Invalid Credentials" });
     }
 
-    const userAgent = useragent(req.headers["user-agent"]);
-    if(userAgent.os.name === "Android"){
-      res.json({err: "Please use a desktop browser to login."});
+    const userAgent = useragent.parse(req.headers["user-agent"]);
+    const isMobileDevice = userAgent.device.family === "iPhone" || userAgent.device.family === "Android";
+
+    if (isMobileDevice) {
+      const currentHour = new Date().getHours();
+      const startHour = 10; // 10 AM
+      const endHour = 13;  // 1 PM
+
+      if (currentHour < startHour || currentHour >= endHour) {
+        return res.json({ err: "Access is allowed on mobile devices only between 10 AM and 1 PM." });
+      }
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000);
