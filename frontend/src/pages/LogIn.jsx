@@ -8,6 +8,7 @@ import BrowserDetector from "./TypeOfBrowser";
 
 const Login = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -21,15 +22,19 @@ const Login = () => {
   const currentHour = new Date().getHours();
 
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (browser === "Microsoft Edge") {
       try {
-        const response = await axios.post(`${apiUrl}/api/auth/no-otp-required`, {
-          email,
-          password,
-          browser
-        });
-  
+        const response = await axios.post(
+          `${apiUrl}/api/auth/no-otp-required`,
+          {
+            email,
+            password,
+            browser,
+          }
+        );
+
         if (!response.data.err) {
           login(response.data.authToken);
           completeLogin();
@@ -41,13 +46,15 @@ const Login = () => {
       } catch (err) {
         showAlert("Verification failed. Please try again.", "error");
       }
-
+      finally{
+        setLoading(false);
+      }
     } else {
       try {
         const response = await axios.post(`${apiUrl}/api/auth/login`, {
           email,
           password,
-          currentHour
+          currentHour,
         });
         if (!response.data.err) {
           setToken(response.data.token);
@@ -58,6 +65,9 @@ const Login = () => {
         }
       } catch (err) {
         showAlert("Login failed. Please try again.", "error");
+      }
+      finally{
+        setLoading(false);
       }
     }
   };
@@ -101,12 +111,22 @@ const Login = () => {
                   onChange={(e) => setOtp(e.target.value)}
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-500 text-white p-2 rounded"
-              >
-                {t("VerifyOTP")}
-              </button>
+              {loading ? (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-400 text-white p-2 rounded"
+                  disabled={true}
+                >
+                  {t("VerifyOTP")}
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-500 text-white p-2 rounded"
+                >
+                  {t("VerifyOTP")}
+                </button>
+              )}
             </form>
           ) : (
             <form className="space-y-4 mt-4" onSubmit={handleLogin}>
@@ -132,12 +152,22 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-500 text-white p-2 rounded"
-              >
-                {t("SignIn")}
-              </button>
+              {loading ? (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-400 text-white p-2 rounded"
+                  disabled={true}
+                >
+                  {t("SignIn")}
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-500 text-white p-2 rounded"
+                >
+                  {t("SignIn")}
+                </button>
+              )}
             </form>
           )}
           <div>
