@@ -46,7 +46,7 @@ router.post("/signup", async (req, res) => {
 
 // Generate OTP and send via email
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password ,currentHour} = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -62,7 +62,6 @@ router.post("/login", async (req, res) => {
     const userAgent = useragent(req.headers["user-agent"]);
     const isMobileDevice = userAgent.os.name === "Android";
 
-    const currentHour = new Date().getHours();
     if (isMobileDevice) {
       const startHour = 10; // 10 AM
       const endHour = 13;  // 1 PM
