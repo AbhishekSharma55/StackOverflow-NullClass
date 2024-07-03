@@ -311,7 +311,7 @@ const QuestionDetail = () => {
                 id="answer"
                 name="answer"
                 rows={3}
-                className="mt-1 block w-full shadow-lg rounded-xl -sm sm:text-sm focus:ring-orange-500 focus:border-orange-500 border border-gray-300 rounded-md"
+                className="mt-1 block w-full shadow-lg sm:text-sm focus:ring-orange-500 focus:border-orange-500 border border-gray-300 rounded-md"
                 value={answer}
                 onChange={handleAnswerChange}
                 required
@@ -321,7 +321,7 @@ const QuestionDetail = () => {
               <button
                 type="submit"
                 value="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-lg rounded-xl -sm text-sm font-medium text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                className="w-full flex justify-center py-2 px-4 border border-transparent shadow-lg rounded-xl -sm text-sm font-medium text-white bg-orange-400 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               >
                 {t("SubmitAnswer")}
               </button>
