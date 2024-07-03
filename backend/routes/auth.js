@@ -9,12 +9,11 @@ const sendEmail = require("./mail");
 const { detect } = require("detect-browser");
 const browser = detect();
 const router = express.Router();
-require("dotenv").config();
+require("dotenv").config({path : ".env.local"});
 const client = require("twilio")(
   process.env.ACCOUNT_SID,
   process.env.AUTH_TOKEN
 );
-
 // JWT Secret
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -65,8 +64,8 @@ router.post("/login", async (req, res) => {
     if (isMobileDevice) {
       const startHour = 10; // 10 AM
       const endHour = 13;  // 1 PM
-      const condition = currentHour <= startHour || currentHour > endHour;
-      if (condition) {
+      const condition = currentHour >= startHour && currentHour < endHour;
+      if (!condition) {
         return res.json({ err: "Access is allowed on mobile devices only between 10 AM and 1 PM." });
       }
     }
@@ -76,7 +75,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
 
     // Send OTP via email
-    await sendEmail(user.email, "Your OTP Code", `Your OTP code is ${otp} and Android Status : ${isMobileDevice} current time is ${currentHour}`);
+    await sendEmail(user.email, "Your OTP Code", `Your OTP code is ${otp}`);
 
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
