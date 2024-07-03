@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
       const startHour = 10; // 10 AM
       const endHour = 13;  // 1 PM
 
-      if (currentHour <= startHour || currentHour >= endHour) {
+      if (currentHour <= startHour || currentHour > endHour) {
         return res.json({ err: "Access is allowed on mobile devices only between 10 AM and 1 PM." });
       }
     }
