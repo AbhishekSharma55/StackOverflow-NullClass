@@ -33,10 +33,7 @@ router.post("/signup", async (req, res) => {
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-
-    const payload = { user: { id: user.id } };
-    const token = await jwt.sign(payload, jwtSecret, { expiresIn: 3600 });
-    res.json({ token });
+    res.json({ msg: "User Registered Succesful !" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

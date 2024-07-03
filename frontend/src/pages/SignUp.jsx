@@ -33,10 +33,8 @@ const Signup = () => {
       );
 
       if (response.status === 200) {
-        // Assuming 200 OK is the success status code
-        localStorage.setItem("token", response.data.token);
-        navigate("/", { replace: true });
-        showAlert("Signed up successful !", "success");
+        navigate("/login", { replace: true });
+        showAlert("Signed up successful , You can Now Login !", "success");
       } else {
         setError("Signup failed. Please try again.");
         showAlert("Signed up failed. Please try again.", "error");
