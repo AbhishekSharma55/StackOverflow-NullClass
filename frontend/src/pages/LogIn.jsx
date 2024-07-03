@@ -18,6 +18,7 @@ const Login = () => {
   const showAlert = useAlert();
   const { t } = useTranslation();
   const browser = BrowserDetector();
+  const currentHour = new Date().getHours();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ const Login = () => {
         const response = await axios.post(`${apiUrl}/api/auth/login`, {
           email,
           password,
+          currentHour
         });
         if (!response.data.err) {
           setToken(response.data.token);
