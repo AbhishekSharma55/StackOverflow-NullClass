@@ -3,6 +3,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
+require("dotenv").config({path : ".env.local"});
 
 // Load environment variables from .env file
 dotenv.config();
