@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
       const startHour = 10; // 10 AM
       const endHour = 13;  // 1 PM
 
-      if (currentHour < startHour || currentHour >= endHour) {
+      if (currentHour <= startHour || currentHour >= endHour) {
         return res.json({ err: "Access is allowed on mobile devices only between 10 AM and 1 PM." });
       }
     }
@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(payload, jwtSecret, { expiresIn: 86400 });
 
     // Send OTP via email
-    await sendEmail(user.email, "Your OTP Code", `Your OTP code is ${otp} and Android Status : ${isMobileDevice}`);
+    await sendEmail(user.email, "Your OTP Code", `Your OTP code is ${otp} and Android Status : ${isMobileDevice} current time is ${currentHour}`);
 
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
