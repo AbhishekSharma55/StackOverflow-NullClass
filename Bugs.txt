@@ -2,7 +2,6 @@
     replicate- 
         increase the data 
 
-
 2) learn authcontext.js
 
-3) colour change bug , reimplement
+5) notification language

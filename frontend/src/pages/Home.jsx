@@ -2,41 +2,25 @@
 import React, { useContext, useEffect } from "react";
 import SideBarContent from "../components/common/SideBar2";
 import Questions from "../components/Questions";
-import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useAlert } from "../context/AlertContext";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import i18next from "i18next";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Home = () => {
   const { logout } = useContext(AuthContext);
   const showAlert = useAlert();
-  const { i18n } = useTranslation();
   const navigate = useNavigate();
-  useEffect(
-    () => {
-      if (localStorage.getItem("language")) {
-        i18n.changeLanguage(localStorage.getItem("language"));
-        if (localStorage.getItem("language") === "hi") {
-          const body = document.getElementById("root");
-          body.className = "bg-blue-400";
-        }
-        if (localStorage.getItem("language") === "zh") {
-          const body = document.getElementById("root");
-          body.className = "bg-green-400";
-        }
-        if (localStorage.getItem("language") === "fr") {
-          const body = document.getElementById("root");
-          body.className = "bg-yellow-400";
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
 
   useEffect(() => {
+    const FetchLanguage = async ()=>{
+      if(localStorage.getItem("language")){
+        const language = localStorage.getItem("language");
+        i18next.changeLanguage(language);
+      }
+    }
     const CheckLoginStatus = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -64,6 +48,7 @@ const Home = () => {
       }
     };
     CheckLoginStatus();
+    FetchLanguage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

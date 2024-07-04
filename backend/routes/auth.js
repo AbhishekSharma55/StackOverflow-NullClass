@@ -6,10 +6,8 @@ const auth = require("../middleware/auth");
 const UserLog = require("../models/UserLog");
 const useragent = require("user-agent-parser");
 const sendEmail = require("./mail");
-const { detect } = require("detect-browser");
-const browser = detect();
 const router = express.Router();
-require("dotenv").config({path : ".env.local"});
+require("dotenv").config({ path: ".env.local" });
 const client = require("twilio")(
   process.env.ACCOUNT_SID,
   process.env.AUTH_TOKEN
@@ -36,13 +34,13 @@ router.post("/signup", async (req, res) => {
     res.json({ msg: "User Registered Succesful !" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({ err: "Server error" });
   }
 });
 
 // Generate OTP and send via email
 router.post("/login", async (req, res) => {
-  const { email, password ,currentHour} = req.body;
+  const { email, password, currentHour } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -60,10 +58,12 @@ router.post("/login", async (req, res) => {
 
     if (isMobileDevice) {
       const startHour = 10; // 10 AM
-      const endHour = 13;  // 1 PM
+      const endHour = 13; // 1 PM
       const condition = currentHour >= startHour && currentHour < endHour;
       if (!condition) {
-        return res.json({ err: "Access is allowed on mobile devices only between 10 AM and 1 PM." });
+        return res.json({
+          err: "Access is allowed on mobile devices only between 10 AM and 1 PM.",
+        });
       }
     }
 
@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({ err: "Server error" });
   }
 });
 
@@ -91,12 +91,13 @@ router.post("/verify-otp", (req, res, next) => {
       const payload = { user: { id: decoded.user.id } };
       const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
       const userAgent = useragent(req.headers["user-agent"]);
+      const device = userAgent.isMobileDevice ? "mobile" : "desktop";
       const userLog = new UserLog({
         ip: req.ip,
         user: decoded.user.id,
         browser: browser,
         os: userAgent.os.name,
-        device: userAgent.device.type || "desktop",
+        device: device,
       });
 
       userLog
@@ -117,8 +118,8 @@ router.post("/verify-otp", (req, res, next) => {
     res.json({ err: "Server error" });
   }
 });
-router.post("/no-otp-required", async (req, res,next) => {
-  const { email, password , browser } = req.body;
+router.post("/no-otp-required", async (req, res, next) => {
+  const { email, password, browser } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -133,14 +134,15 @@ router.post("/no-otp-required", async (req, res,next) => {
     const payload = { user: { id: user.id } };
     const authToken = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
     const userAgent = useragent(req.headers["user-agent"]);
+    const device = userAgent.isMobileDevice ? "mobile" : "desktop";
     const userLog = new UserLog({
       ip: req.ip,
       user: user.id,
       browser: browser,
       os: userAgent.os.name,
-      device: userAgent.device.type || "desktop",
+      device: device,
     });
-    console.log(userLog)
+    console.log(userLog);
     userLog
       .save()
       .then(() => {
@@ -153,7 +155,7 @@ router.post("/no-otp-required", async (req, res,next) => {
     res.json({ authToken });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({ err: "Server error" });
   }
 });
 
@@ -242,7 +244,7 @@ router.post("/reset-password", async (req, res) => {
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({ err: "Server error" });
   }
 });
 
@@ -305,7 +307,7 @@ router.post("/emailotp", async (req, res) => {
     res.json({ token, msg: "OTP sent to your email" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.json({ err: "Server error" });
   }
 });
 

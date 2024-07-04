@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Inbox, Search, Trophy, User, CircleHelp, Rows3 } from "lucide-react";
 import { AuthContext } from "../../context/AuthContext";
@@ -9,6 +9,24 @@ const NavBar = () => {
   const [showLogoutButton, setShowLogoutButton] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const navBar = document.getElementById("navbar");
+    navBar.classList.remove("bg-blue-200", "bg-green-200", "bg-yellow-300", "bg-white");
+    if (localStorage.getItem("language")) {
+      if (localStorage.getItem("language") === "hi") {
+        navBar.classList.add("bg-blue-200");
+      }
+      if (localStorage.getItem("language") === "zh") {
+        navBar.classList.add("bg-green-200");
+      }
+      if (localStorage.getItem("language") === "fr") {
+        navBar.classList.add("bg-yellow-300");
+      }
+    } else {
+      navBar.classList.add("bg-white");
+    }
+  });
 
   const handleLogoClick = () => {
     navigate("/");
@@ -24,7 +42,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav id="navbar" className="absolute bg-white w-full z-20">
+    <nav id="navbar" className="absolute w-full z-20">
       <div className="flex align-middle items-center p-2 md:px-10">
         <div className="flex items-center justify-between w-full">
           <button className="w-auto pr-5" onClick={handleLogoClick}>

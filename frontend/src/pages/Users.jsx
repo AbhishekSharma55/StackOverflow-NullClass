@@ -31,7 +31,7 @@ const Users = () => {
   return (
     <div className="m-10">
       <h1 className="text-4xl">{t("Users")}</h1>
-      <div className="flex py-10 gap-5">
+      <div className="flex flex-wrap py-10 gap-5">
         {Users.map((user) => {
           return (
             <div key={user._id}>

@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy" : "https://stack-overflow-null-class-api.vercel.app",
+  "proxy": "https://stack-overflow-null-class-api.vercel.app",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -20,6 +20,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
+    "useragent": "^2.3.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

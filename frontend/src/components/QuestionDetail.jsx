@@ -220,7 +220,7 @@ const QuestionDetail = () => {
   }
 
   return (
-    <div className="container lg:pr-40 md:flex md:justify-">
+    <div className="container lg:pr-40 md:flex md:justify-center pt-10">
       <div className="w-full md:w-3/4">
         <div className="bg-white shadow-lg rounded-xl -md p-4 mb-4">
           <h1 className="text-2xl font-bold">{question.question}</h1>
