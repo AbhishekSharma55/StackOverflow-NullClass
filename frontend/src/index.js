@@ -21,33 +21,32 @@ import TEST from "./pages/TEST";
 import i18next from "i18next";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-if (localStorage.getItem("language")) 
+if (localStorage.getItem("language"))
   i18next.changeLanguage(localStorage.getItem("language"));
 
 root.render(
-    <BrowserRouter>
-      <AuthProvider>
-        <AlertProvider>
-          <CommonBar />
-          <div className="pt-10 md:pl-80 md:pt-12 block overflow-y-auto">
-            
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/test" element={<TEST />} />
-              <Route path="/tags" element={<Tags />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/MyProfile" element={<EditUser />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/forgot-password" element={<ResetPassword />} />
-              <Route path="/verify-otp" element={<VerifyOtp />} />
-              <Route path="/askquestion" element={<AskQuestion />} />
-              <Route path="/question/:id" element={<QuestionDetail />} />
-            </Routes>
-          </div>
-        </AlertProvider>
-      </AuthProvider>
-    </BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
+      <AlertProvider>
+        <CommonBar />
+        <div className="pt-10 md:pl-80 md:pt-12">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/test" element={<TEST />} />
+            <Route path="/tags" element={<Tags />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/MyProfile" element={<EditUser />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ResetPassword />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/askquestion" element={<AskQuestion />} />
+            <Route path="/question/:id" element={<QuestionDetail />} />
+          </Routes>
+        </div>
+      </AlertProvider>
+    </AuthProvider>
+  </BrowserRouter>
 );
 
 reportWebVitals();
