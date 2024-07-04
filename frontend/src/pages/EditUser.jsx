@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertContext";
 import LanguageSelector from "../utils/LanguageSelector";
 import { useTranslation } from "react-i18next";
+import moment from "moment";
 
 const EditUser = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -170,6 +171,7 @@ const EditUser = () => {
               <th>{t("Browser")}</th>
               <th>{t("OperatingSystem")}</th>
               <th>{t("Device")}</th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
@@ -179,6 +181,7 @@ const EditUser = () => {
                 <td>{log.browser}</td>
                 <td>{log.os}</td>
                 <td>{log.device}</td>
+                <td>{moment(log.timestamp).fromNow()}</td>
               </tr>
             ))}
           </tbody>

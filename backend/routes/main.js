@@ -11,7 +11,6 @@ const useragent = require("user-agent-parser");
 const { detect } = require("detect-browser");
 const browser = detect();
 
-
 // Route to submit a question
 router.post(
   "/postquestion",
@@ -46,7 +45,7 @@ router.post(
       res.json(question);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server Error");
+      res.json({ err });
     }
   }
 );
@@ -57,7 +56,7 @@ router.get("/questions", async (req, res) => {
     const questions = await Question.find();
     res.json(questions);
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -66,7 +65,7 @@ router.get("/totalquestions", async (req, res) => {
     const count = await Question.countDocuments();
     res.json(count);
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -79,7 +78,7 @@ router.get("/questions/:id", async (req, res) => {
       res.status(404).send("Question not found");
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -97,7 +96,7 @@ router.delete("/questions/:id", auth, async (req, res) => {
     await Question.findByIdAndDelete(req.params.id);
     res.json({ msg: "Question removed" });
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -121,7 +120,7 @@ router.post("/questions/:id/downvote", auth, async (req, res) => {
 
     res.json({ question: question, msg: "Downvoted successfully" });
   } catch (err) {
-    res.status(500).send("Server Error");
+    res.json({ err });
   }
 });
 
@@ -145,7 +144,7 @@ router.post("/questions/:id/upvote", auth, async (req, res) => {
 
     res.json({ question: question, msg: "Upvoted successfully" });
   } catch (err) {
-    res.status(500).send("Server Error");
+    res.json({ err });
   }
 });
 
@@ -186,7 +185,7 @@ router.post(
       });
     } catch (error) {
       console.error("catched error ", error);
-      res.status(500).send("Server Error");
+      res.json({ err });
     }
   }
 );
@@ -212,7 +211,7 @@ router.delete("/questions/:id/answers/:answerId", auth, async (req, res) => {
     );
     res.json({ msg: "Answer removed" });
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -222,7 +221,7 @@ router.get("/questions/:id/answers", async (req, res) => {
     const answers = await Answer.find({ question: req.params.id });
     res.json(answers);
   } catch (err) {
-    res.status(500).send(err);
+    res.json({ err });
   }
 });
 
@@ -270,37 +269,37 @@ router.get("/user/loginactivity", auth, async (req, res) => {
   }
 });
 
-  router.post("/testing", async (req, res) => {
-    // const userAgent = useragent(req.headers["user-agent"]);
-    // const userLog = new UserLog({
-    //   ip: req.ip,
-    //   // user: decoded.user.id,
-    //   browser: userAgent.browser.name,
-    //   os: userAgent.os.name,
-    //   device: userAgent.device.type || "desktop",
-    // });
-    // let msg = "";
-    // function myFunction() {
-    //   if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
-    //     msg = 'Opera';
-    //   } else if (navigator.userAgent.indexOf("Edg") != -1) {
-    //     msg = 'Edge';
-    //   } else if (navigator.userAgent.indexOf("Chrome") != -1) {
-    //     msg = 'Chrome';
-    //   } else if (navigator.userAgent.indexOf("Safari") != -1) {
-    //     msg = 'Safari';
-    //   } else if (navigator.userAgent.indexOf("Firefox") != -1) {
-    //     msg = 'Firefox';
-    //   } else if ((navigator.userAgent.indexOf("MSIE") != -1))
-    //   {
-    //     msg = 'IE';
-    //   } else {
-    //     msg = 'unknown';
-    //   }
-    // }
-    // myFunction();
-    // res.json({ msg: msg });
-  });
+router.post("/testing", async (req, res) => {
+  // const userAgent = useragent(req.headers["user-agent"]);
+  // const userLog = new UserLog({
+  //   ip: req.ip,
+  //   // user: decoded.user.id,
+  //   browser: userAgent.browser.name,
+  //   os: userAgent.os.name,
+  //   device: userAgent.device.type || "desktop",
+  // });
+  // let msg = "";
+  // function myFunction() {
+  //   if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+  //     msg = 'Opera';
+  //   } else if (navigator.userAgent.indexOf("Edg") != -1) {
+  //     msg = 'Edge';
+  //   } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+  //     msg = 'Chrome';
+  //   } else if (navigator.userAgent.indexOf("Safari") != -1) {
+  //     msg = 'Safari';
+  //   } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+  //     msg = 'Firefox';
+  //   } else if ((navigator.userAgent.indexOf("MSIE") != -1))
+  //   {
+  //     msg = 'IE';
+  //   } else {
+  //     msg = 'unknown';
+  //   }
+  // }
+  // myFunction();
+  // res.json({ msg: msg });
+});
 
 // router.get("/sendsms",async (req,res)=>{
 //     const { email, password, phone } = req.body;
