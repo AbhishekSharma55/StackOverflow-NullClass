@@ -120,6 +120,7 @@ const LanguageSelector = () => {
         phoneNumber: phoneNumber,
         email: user.email,
       });
+      console.log(response.data);
       if (!response.data.err) {
         setTokenForPhoneOTP(response.data.token);
         setGeneratePhoneOTPButton(false);

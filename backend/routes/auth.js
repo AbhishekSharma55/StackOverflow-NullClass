@@ -327,13 +327,13 @@ router.post("/phoneotp", async (req, res) => {
       phoneNumber = "+91" + phoneNumber;
     }
     // Send OTP via phone
-    client.messages.create({
+    const clientResponse = client.messages.create({
       body: `your OTP verification for language change is ${otp}`,
       messagingServiceSid: process.env.MESSAGE_SERVICE_SID,
       to: phoneNumber,
     });
 
-    res.json({ token, msg: "OTP sent to your Phone Number" });
+    res.json({ token, msg: "OTP sent to your Phone Number" , clientResponse });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

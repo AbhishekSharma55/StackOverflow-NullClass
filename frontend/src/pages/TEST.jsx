@@ -1,10 +1,9 @@
 import axios from "axios";
 import React from "react";
-import BrowserDetector from "./TypeOfBrowser";
-// import DropDown from "../components/ui/dropdown/DropDown";
+
 const TEST = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  
+
   const TestingAPICall = async () => {
     try {
       const response = await axios.post(`${apiUrl}/api/testing`);
@@ -24,7 +23,6 @@ const TEST = () => {
       >
         Test
       </button>
-      <h2></h2>
     </div>
   );
 };
