@@ -270,7 +270,13 @@ router.get("/user/loginactivity", auth, async (req, res) => {
 });
 
 router.post("/testing", async (req, res) => {
-  res.json({KEY : process.env.API_KEY , SID : process.env.ACCOUNT_SID , AUTH : process.env.AUTH_TOKEN , MESSAGE : process.env.MESSAGE_SERVICE_SID})
+  res.json({
+    msg:"API is working",
+    // KEY: process.env.API_KEY,
+    // SID: process.env.ACCOUNT_SID,
+    // AUTH: process.env.AUTH_TOKEN,
+    // MESSAGE: process.env.MESSAGE_SERVICE_SID,
+  });
 });
 
 module.exports = router;
