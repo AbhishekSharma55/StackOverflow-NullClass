@@ -8,7 +8,7 @@ const TEST = () => {
   const TestingAPICall = async () => {
     try {
       const response = await axios.post(`${apiUrl}/api/testing`);
-      console.log(response.data.msg);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,13 +22,10 @@ const TEST = () => {
           TestingAPICall();
         }}
       >
-        TEST
+        Test
       </button>
-      <BrowserDetector />
+      <h2></h2>
     </div>
-    // <div className="flex flex-row min-h-screen justify-center items-center">
-    //   <DropDown buttonText="Profile" content={<p>Hello World</p>}></DropDown>
-    // </div>
   );
 };
 
