@@ -270,51 +270,7 @@ router.get("/user/loginactivity", auth, async (req, res) => {
 });
 
 router.post("/testing", async (req, res) => {
-  // const userAgent = useragent(req.headers["user-agent"]);
-  // const userLog = new UserLog({
-  //   ip: req.ip,
-  //   // user: decoded.user.id,
-  //   browser: userAgent.browser.name,
-  //   os: userAgent.os.name,
-  //   device: userAgent.device.type || "desktop",
-  // });
-  // let msg = "";
-  // function myFunction() {
-  //   if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
-  //     msg = 'Opera';
-  //   } else if (navigator.userAgent.indexOf("Edg") != -1) {
-  //     msg = 'Edge';
-  //   } else if (navigator.userAgent.indexOf("Chrome") != -1) {
-  //     msg = 'Chrome';
-  //   } else if (navigator.userAgent.indexOf("Safari") != -1) {
-  //     msg = 'Safari';
-  //   } else if (navigator.userAgent.indexOf("Firefox") != -1) {
-  //     msg = 'Firefox';
-  //   } else if ((navigator.userAgent.indexOf("MSIE") != -1))
-  //   {
-  //     msg = 'IE';
-  //   } else {
-  //     msg = 'unknown';
-  //   }
-  // }
-  // myFunction();
-  // res.json({ msg: msg });
+  res.json({KEY : process.env.API_KEY , SID : process.env.ACCOUNT_SID , AUTH : process.env.AUTH_TOKEN , MESSAGE : process.env.MESSAGE_SERVICE_SID})
 });
-
-// router.get("/sendsms",async (req,res)=>{
-//     const { email, password, phone } = req.body;
-//   const user = {
-//     email,
-//     password,
-//     phone
-//   };
-
-//   userDatabase.push(user);
-
-//   res.status(201).send({
-//     message: 'Account created successfully, kindly check your phone to activate your account!',
-//     data: user
-//   })
-// });
 
 module.exports = router;

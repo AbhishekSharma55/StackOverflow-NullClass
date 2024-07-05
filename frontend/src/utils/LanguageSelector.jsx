@@ -9,15 +9,18 @@ const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const showAlert = useAlert();
+  const [loading, setLoading] = useState(false);
   const [tokenForEmailOTP, setTokenForEmailOTP] = useState("");
   const [tokenForPhoneOTP, setTokenForPhoneOTP] = useState("");
   const [selectedLanguageName, setSelectedLanguageName] = useState("English");
   const [selectedLanguageCode, setSelectedLanguageCode] = useState("English");
   const [frenchSelected, setFrenchSelected] = useState(false);
-  const [generateOTPBUttonForFrench, setGenerateOTPButtonForFrench] = useState(false);
+  const [generateOTPBUttonForFrench, setGenerateOTPButtonForFrench] =
+    useState(false);
   const [languageChanged, setLanguageChanged] = useState(false);
   const [generatePhoneOTPButton, setGeneratePhoneOTPButton] = useState(false);
-  const [verifyOTPButtonForFrench, setVerifyOTPButtonForFrench] = useState(false);
+  const [verifyOTPButtonForFrench, setVerifyOTPButtonForFrench] =
+    useState(false);
   const [verifyOTPButton, setVerifyOTPButton] = useState(false);
   const [OTPForEmail, setOTPForEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -48,14 +51,12 @@ const LanguageSelector = () => {
       // showAlert("Language changed to " + languageName, "success");
       // localStorage.setItem("language", languageCode);
       // navigate("/");
-    }
-    else if (languageCode === "fr") {
+    } else if (languageCode === "fr") {
       setFrenchSelected(true);
       setGenerateOTPButtonForFrench(true);
       setLanguageChanged(false);
       setGeneratePhoneOTPButton(false);
-    }
-     else {
+    } else {
       setLanguageChanged(true);
       setGeneratePhoneOTPButton(true);
       setFrenchSelected(false);
@@ -64,6 +65,7 @@ const LanguageSelector = () => {
   };
 
   const GenerateOTPForFrench = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const user = await getCurrentUser();
@@ -71,7 +73,7 @@ const LanguageSelector = () => {
         email: user.email,
       });
       if (!response.data.err) {
-        console.log(response.data.token)
+        console.log(response.data.token);
         setTokenForEmailOTP(response.data.token);
         setGenerateOTPButtonForFrench(false);
         setVerifyOTPButtonForFrench(true);
@@ -81,19 +83,19 @@ const LanguageSelector = () => {
       }
     } catch (err) {
       showAlert("Login failed. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOtpForFrench = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${apiUrl}/api/auth/verify-otp-email`,
-        {
-          OTPForEmail,
-          tokenForEmailOTP,
-        }
-      );
+      const response = await axios.post(`${apiUrl}/api/auth/verify-otp-email`, {
+        OTPForEmail,
+        tokenForEmailOTP,
+      });
       if (!response.data.err) {
         i18n.changeLanguage("fr");
         showAlert("Language changed to French", "success");
@@ -104,10 +106,13 @@ const LanguageSelector = () => {
       }
     } catch (err) {
       showAlert("Login failed. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   const GenerateOTPForPhone = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const user = await getCurrentUser();
@@ -125,10 +130,13 @@ const LanguageSelector = () => {
       }
     } catch (err) {
       showAlert("Login failed. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOTPForPhone = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -148,6 +156,8 @@ const LanguageSelector = () => {
       }
     } catch (err) {
       showAlert("Login failed. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -173,25 +183,31 @@ const LanguageSelector = () => {
       </div>
       {frenchSelected && (
         <div className="text-center mx-10 mb-10">
-          <h1 className="text-xl">
-           {t("ChangeLanguageEmailOTP")}
-          </h1>
+          <h1 className="text-xl">{t("ChangeLanguageEmailOTP")}</h1>
           <form
             className="space-y-4 mt-4 md:mx-10"
             onSubmit={handleVerifyOtpForFrench}
           >
             {generateOTPBUttonForFrench ? (
-              <button
-                onClick={GenerateOTPForFrench}
-                className="w-full bg-orange-500 text-white p-2 rounded"
-              >
-                {t("GenerateOTP")}
-              </button>
+              loading ? (
+                <button
+                  onClick={GenerateOTPForFrench}
+                  className="w-full bg-orange-200 text-white p-2 rounded"
+                  disabled={true}
+                >
+                  {t("GenerateOTP")}
+                </button>
+              ) : (
+                <button
+                  onClick={GenerateOTPForFrench}
+                  className="w-full bg-orange-500 text-white p-2 rounded"
+                >
+                  {t("GenerateOTP")}
+                </button>
+              )
             ) : (
               <div>
-                <p className="text-xl font-bold ">
-                  {t("OTPSendEmail")}
-                </p>
+                <p className="text-xl font-bold ">{t("OTPSendEmail")}</p>
               </div>
             )}
             {verifyOTPButtonForFrench && (
@@ -204,12 +220,22 @@ const LanguageSelector = () => {
                   value={OTPForEmail}
                   onChange={(e) => setOTPForEmail(e.target.value)}
                 />
-                <button
-                  type="submit"
-                  className="w-full bg-orange-500 text-white p-2 rounded"
-                >
-                  {t("VerifyOTP")}
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-300 text-white p-2 rounded"
+                    disabled={true}
+                  >
+                    {t("VerifyOTP")}
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-500 text-white p-2 rounded"
+                  >
+                    {t("VerifyOTP")}
+                  </button>
+                )}
               </div>
             )}
           </form>
@@ -219,9 +245,7 @@ const LanguageSelector = () => {
         <div className="text-center mx-10 mb-10">
           {generatePhoneOTPButton ? (
             <form onSubmit={GenerateOTPForPhone}>
-          <h1 className="text-xl">
-            {t("ChangeLanguagePhoneOTP")}
-          </h1>
+              <h1 className="text-xl">{t("ChangeLanguagePhoneOTP")}</h1>
               <input
                 className="border border-black w-full py-2 my-5"
                 placeholder="Phone Number (+91)"
@@ -231,19 +255,26 @@ const LanguageSelector = () => {
                   setPhoneNumber(e.target.value);
                 }}
               ></input>
-              <button
-                // onClick={GenerateOTP}
-                type="submit"
-                className="w-full bg-orange-500 text-white p-2 rounded"
-              >
-                {t("GenerateOTP")}
-              </button>
+              {loading ? (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-300 text-white p-2 rounded"
+                  disabled={true}
+                >
+                  {t("GenerateOTP")}
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-orange-500 text-white p-2 rounded"
+                >
+                  {t("GenerateOTP")}
+                </button>
+              )}
             </form>
           ) : (
             <div>
-              <p className="text-xl font-bold ">
-                {t("OTPSendPhone")}
-              </p>
+              <p className="text-xl font-bold ">{t("OTPSendPhone")}</p>
             </div>
           )}
           {verifyOTPButton && (
@@ -260,12 +291,22 @@ const LanguageSelector = () => {
                   value={OTPForPhone}
                   onChange={(e) => setOTPForPhone(e.target.value)}
                 />
-                <button
-                  type="submit"
-                  className="w-full bg-orange-500 text-white p-2 rounded"
-                >
-                  {t("VerifyOTP")}
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-300 text-white p-2 rounded"
+                    disabled={true}
+                  >
+                    {t("VerifyOTP")}
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-500 text-white p-2 rounded"
+                  >
+                    {t("VerifyOTP")}
+                  </button>
+                )}
               </div>
             </form>
           )}
