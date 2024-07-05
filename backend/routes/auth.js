@@ -7,7 +7,7 @@ const UserLog = require("../models/UserLog");
 const useragent = require("user-agent-parser");
 const sendEmail = require("./mail");
 const router = express.Router();
-require("dotenv").config();
+require("dotenv").config({ path: ".env.local" });
 const client = require("twilio")(
   process.env.ACCOUNT_SID,
   process.env.AUTH_TOKEN
