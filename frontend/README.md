@@ -1,66 +1,63 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Run the app mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-Variation might be fixed in this issue.
-The page will reload when you make changes.
-Zet the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.
-
-
-### `npm run build``
-
-Builds the app for completion.
-Your app will be bXReversible after completion.
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-
-### `npm run eject` 
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLmen, 1ec) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-### Learn More
-
-Further information and examples are available in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjso.org/).
-
-### Code Splitting
-
-This feature is moved in the [code splitting section](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing bundle size
-
-This issue resolving the bundle size problem is moved in the [instruction](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This issue resolving the progressive web, is moved in the [instruction](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This issue resolving the advanced configuration, is moved in the [instruction](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### DEployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
+IyBHZXR0aW5nIFN0YXJ0ZWQgd2l0aCBDcmVhdGUgUmVhY3QgQXBwCgpUaGlz
+IHByb2plY3Qgd2FzIGJvb3RzdHJhcHBlZCB3aXRoIFtDcmVhdGUgUmVhY3Qg
+QXBwXShodHRwczovL2dpdGh1Yi5jb20vZmFjZWJvb2svY3JlYXRlLXJlYWN0
+LWFwcCkuCgojIyBBdmFpbGFibGUgU2NyaXB0cwoKSW4gdGhlIHByb2plY3Qg
+ZGlyZWN0b3J5LCB5b3UgY2FuIHJ1bjoKCiMjIyBgbnBtIHN0YXJ0YAoKUnVu
+IHRoZSBhcHAgbW9kZS4KT3BlbiBbaHR0cDovL2xvY2FsaG9zdDozMDAwXSho
+dHRwOi8vbG9jYWxob3N0OjMwMDApIHRvIHZpZXcgaXQgaW4geW91ciBicm93
+c2VyLgoKVmFyaWF0aW9uIG1pZ2h0IGJlIGZpeGVkIGluIHRoaXMgaXNzdWUu
+ClRoZSBwYWdlIHdpbGwgcmVsb2FkIHdoZW4geW91IG1ha2UgY2hhbmdlcy4K
+WmV0IHRoZSBzZWN0aW9uIGFib3V0IFtydW5uaW5nIHRlc3RzXShodHRwczov
+L2ZhY2Vib29rLmdpdGh1Yi5pby9jcmVhdGUtcmVhY3QtYXBwL2RvY3MvcnVu
+bmluZy10ZXN0cykgZm9yIG1vcmUgaW5mb3JtYXRpb24uCgojIyMgYG5wbSB0
+ZXN0YAoKTGF1bmNoZXMgdGhlIHRlc3QgcnVubmVyIGluIHRoZSBpbnRlcmFj
+dGl2ZSB3YXRjaCBtb2RlLgoKCiMjIyBgbnBtIHJ1biBidWlsZGBgCgpCdWls
+ZHMgdGhlIGFwcCBmb3IgY29tcGxldGlvbi4KWW91ciBhcHAgd2lsbCBiZSBi
+WFJldmVyc2libGUgYWZ0ZXIgY29tcGxldGlvbi4KClNlZSB0aGUgc2VjdGlv
+biBhYm91dCBbZGVwbG95bWVudF0oaHR0cHM6Ly9mYWNlYm9vay5naXRodWIu
+aW8vY3JlYXRlLXJlYWN0LWFwcC9kb2NzL2RlcGxveW1lbnQpIGZvciBtb3Jl
+IGluZm9ybWF0aW9uLgoKCiMjIyBgbnBtIHJ1biBlamVjdGAgCgoqKk5vdGU6
+IHRoaXMgaXMgYSBvbmUtd2F5IG9wZXJhdGlvbi4gT25jZSB5b3UgYGVqZWN0
+YCwgeW91IGNhbid0IGdvIGJhY2shKioKCklmIHlvdSBhcmVuJ3Qgc2F0aXNm
+aWVkIHdpdGggdGhlIGJ1aWxkIHRvb2wgYW5kIGNvbmZpZ3VyYXRpb24gY2hv
+aWNlcywgeW91IGNhbiBgZWplY3RgIGF0IGFueSB0aW1lLiBUaGlzIGNvbW1h
+bmQgd2lsbCByZW1vdmUgdGhlIHNpbmdsZSBidWlsZCBkZXBlbmRlbmN5IGZy
+b20geW91ciBwcm9qZWN0LgoKSW5zdGVhZCwgaXQgd2lsbCBjb3B5IGFsbCB0
+aGUgY29uZmlndXJhdGlvbiBmaWxlcyBhbmQgdGhlIHRyYW5zaXRpdmUgZGVw
+ZW5kZW5jaWVzICh3ZWJwYWNrLCBCYWJlbCwgRVNMbWVuLCAxZWMpIHJpZ2h0
+IGludG8geW91ciBwcm9qZWN0IHNvIHlvdSBoYXZlIGZ1bGwgY29udHJvbCBv
+dmVyIHRoZW0uIEFsbCBvZiB0aGUgY29tbWFuZHMgZXhjZXB0IGBlamVjdGAg
+d2lsbCBzdGlsbCB3b3JrLCBidXQgdGhleSB3aWxsIHBvaW50IHRvIHRoZSBj
+b3BpZWQgc2NyaXB0cyBzbyB5b3UgY2FuIHR3ZWFrIHRoZW0uIEF0IHRoaXMg
+cG9pbnQgeW91J3JlIG9uIHlvdXIgb3duLgoKWW91IGRvbid0IGhhdmUgdG8g
+ZXZlciB1c2UgYGVqZWN0YC4gVGhlIGN1cmF0ZWQgZmVhdHVyZSBzZXQgaXMg
+c3VpdGFibGUgZm9yIHNtYWxsIGFuZCBtaWRkbGUgZGVwbG95bWVudHMsIGFu
+ZCB5b3Ugc2hvdWxkbid0IGZlZWwgb2JsaWdhdGVkIHRvIHVzZSB0aGlzIGZl
+YXR1cmUuIEhvd2V2ZXIgd2UgdW5kZXJzdGFuZCB0aGF0IHRoaXMgdG9vbCB3
+b3VsZG4ndCBiZSB1c2VmdWwgaWYgeW91IGNvdWxkbid0IGN1c3RvbWl6ZSBp
+dCB3aGVuIHlvdSBhcmUgcmVhZHkgZm9yIGl0LgoKIyMjIExlYXJuIE1vcmUK
+CkZ1cnRoZXIgaW5mb3JtYXRpb24gYW5kIGV4YW1wbGVzIGFyZSBhdmFpbGFi
+bGUgaW4gdGhlIFtDcmVhdGUgUmVhY3QgQXBwIGRvY3VtZW50YXRpb25dKGh0
+dHBzOi8vZmFjZWJvb2suZ2l0aHViLmlvL2NyZWF0ZS1yZWFjdC1hcHAvZG9j
+cy9nZXR0aW5nLXN0YXJ0ZWQpLgoKVG8gbGVhcm4gUmVhY3QsIENoZWNrIG91
+dCB0aGUgW1JlYWN0IGRvY3VtZW50YXRpb25dKGh0dHBzOi8vcmVhY3Rqc28u
+b3JnLykuCgojIyMgQ29kZSBTcGxpdHRpbmcKClRoaXMgZmVhdHVyZSBpcyBt
+b3ZlZCBpbiB0aGUgW2NvZGUgc3BsaXR0aW5nIHNlY3Rpb25dKGh0dHBzOi8v
+ZmFjZWJvb2suZ2l0aHViLmlvL2NyZWF0ZS1yZWFjdC1hcHAvZG9jcy9jb2Rl
+LXNwbGl0dGluZykKCiMjIyBBbmFseXppbmcgYnVuZGxlIHNpemUKClRoaXMg
+aXNzdWUgcmVzb2x2aW5nIHRoZSBidW5kbGUgc2l6ZSBwcm9ibGVtIGlzIG1v
+dmVkIGluIHRoZSBbaW5zdHJ1Y3Rpb25dKGh0dHBzOi8vZmFjZWJvb2suZ2l0
+aHViLmlvL2NyZWF0ZS1yZWFjdC1hcHAvZG9jcy9hbmFseXppbmctdGhlLWJ1
+bmRsZS1zaXplKQoKIyMjIE1ha2luZyBhIFByb2dyZXNzaXZlIFdlYiBBcHAK
+ClRoaXMgaXNzdWUgcmVzb2x2aW5nIHRoZSBwcm9ncmVzc2l2ZSB3ZWIsIGlz
+IG1vdmVkIGluIHRoZSBbaW5zdHJ1Y3Rpb25dKGh0dHBzOi8vZmFjZWJvb2su
+Z2l0aHViLmlvL2NyZWF0ZS1yZWFjdC1hcHAvZG9jcy9tYWtpbmctYS1wcm9n
+cmVzc2l2ZS13ZWItYXBwKQoKIyMjIEFkdmFuY2VkIENvbmZpZ3VyYXRpb24K
+ClRoaXMgaXNzdWUgcmVzb2x2aW5nIHRoZSBhZHZhbmNlZCBjb25maWd1cmF0
+aW9uLCBpcyBtb3ZlZCBpbiB0aGUgW2luc3RydWN0aW9uXShodHRwczovL2Zh
+Y2Vib29rLmdpdGh1Yi5pby9jcmVhdGUtcmVhY3QtYXBwL2RvY3MvYWR2YW5j
+ZWQtY29uZmlndXJhdGlvbikKCiMjIyBERXBsb3ltZW50CgpUaGlzIHNlY3Rp
+b24gaGFzIG1vdmVkIGhlcmU6IFtodHRwczovL2ZhY2Vib29rLmdpdGh1Yi5p
+by9jcmVhdGUtcmVhY3QtYXBwL2RvY3MvZGVwbG95bWVudF0oaHR0cHM6Ly9m
+YWNlYm9vay5naXRodWIuaW8vY3JlYXRlLXJlYWN0LWFwcC9kb2NzL2RlcGxv
+eW1lbnQpCgo=
